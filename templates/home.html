@@ -1,10 +1,42 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+
+       var socket = io.connect('http://127.0.0.1:5000');
+
+       socket.on('connect', function() {
+            socket.send('i am connected');
+            });
+
+       console.log('ready');
+
+       socket.on('message', function(msg){
+            $("#messages").append("<li>" + msg + "</li>");
+       });
+
+       $("#sendbutton").on('click', function(){
+            socket.send($("#mymessage").val());
+            $("#mymessage").val('');
+       });
+
+    });
+
+    </script>
+
+{% endblock %}
 
 {% block page_content %}
 
-<div class='container'>
+    <div class='container'>
 
-</div>
+        <ul id="messages"></ul>
+        <input type="text" id="mymessage">
+        <button id="sendbutton">send</button>
+
+    </div>
 {% endblock %}
