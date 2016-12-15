@@ -11,16 +11,17 @@
 
            socket.on('connect', function() {
                 socket.send('i am connected');
-                });
 
-           socket.on('message', function(msg) {
+                 });
 
-               Materialize.toast(msg, 1000)
+           socket.on('new connection', function(msg) {
 
+               Materialize.toast(msg.message, 1000)
+                console.log(msg.connections);
            });
 
            socket.on('chat_response', function(msg){
-                $("#messages").append('<li class="collection-item">' + msg.message + '</li>');
+         $("#messages").append('<li class="collection-item">'+'<span class="title">'+'Some person'+'</span>'+ '<p>' + msg.message + '</p>' +'</li>');
            });
 
            $("#sendbutton").on('click', function(){
@@ -42,7 +43,7 @@
         <div class="col s12">
           <div class="card">
             <div class="card-content">
-              <ul class="collection" id="messages"></ul>
+              <ul class="collection" id="messages"><span id="conn_count" class="new badge red">people in the room</span></ul>
             </div>
               <div class="card-content">
           <input placeholder="Send chat" type="text" id="mymessage">
