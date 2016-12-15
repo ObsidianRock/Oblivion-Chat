@@ -23,6 +23,10 @@ def handle_message(msg):
     emit('chat_response', {'message': msg['message']}, broadcast=True)  # takes whatever message coming in and send to everyone connected
 
 
+@socketio.on('message')
+def handle_connect(msg):
+    send(msg, broadcast=True)
+
 
 if __name__ == '__main__':
 

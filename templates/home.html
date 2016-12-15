@@ -5,25 +5,30 @@
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-    $(document).ready(function(){
+        $(document).ready(function(){
 
-       var socket = io.connect('http://127.0.0.1:5000');
+           var socket = io.connect('http://127.0.0.1:5000');
 
-       socket.on('connect', function() {
-            socket.send('i am connected');
-            });
+           socket.on('connect', function() {
+                socket.send('i am connected');
+                });
 
+           socket.on('message', function(msg) {
 
-       socket.on('chat_response', function(msg){
-            $("#messages").append('<li class="collection-item">' + msg.message + '</li>');
-       });
+               Materialize.toast(msg, 1000)
 
-       $("#sendbutton").on('click', function(){
-            socket.emit("chat_message", {"message":$("#mymessage").val()});
-            $("#mymessage").val('');
-       });
+           });
 
-    });
+           socket.on('chat_response', function(msg){
+                $("#messages").append('<li class="collection-item">' + msg.message + '</li>');
+           });
+
+           $("#sendbutton").on('click', function(){
+                socket.emit("chat_message", {"message":$("#mymessage").val()});
+                $("#mymessage").val('');
+           });
+
+        });
 
     </script>
 
