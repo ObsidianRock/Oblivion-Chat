@@ -36,18 +36,23 @@ class User(DataBase):
         super().__init__(db)
         self.table = table
 
-    def insert_user(self, username, password):
+    def check_user_exists(self, username):
+        obj = r.db(self.db).table(self.table).filter({'User': username}).is_empty().run(self.conn)
+        return not obj
 
-        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        try:
-            r.db(self.db).table(self.table).insert({'User': username,
-                                                    'Password': pw_hash}).run(self.conn)
-        except Exception as e:
-            print(str(e))
-            print('couldnt insert items')
+    def insert_user(self, username, password):
+        if not self.check_user_exists(username):
+            pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+            try:
+                r.db(self.db).table(self.table).insert({'User': username,
+                                                        'Password': pw_hash}).run(self.conn)
+            except Exception as e:
+                print(str(e))
+                print('couldnt insert items')
+        else:
+            print('User Exits')
 
     def check_password(self, username, password):
-
         password_hash = self.get_user_password(username)['Password']
         return bcrypt.check_password_hash(password_hash, password)
 
