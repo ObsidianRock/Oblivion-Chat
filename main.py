@@ -1,6 +1,6 @@
 from database import Message
 
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask_socketio import SocketIO, send, emit
 
 app = Flask(__name__)
@@ -26,9 +26,13 @@ class Connection:
 
 connection = Connection()
 
+
 @app.route('/')
 def main():
-    return render_template('home.html')
+    return render_template('main.html')
+
+
+
 
 
 @socketio.on('chat_message')
@@ -39,7 +43,9 @@ def handle_message(msg):
 
 @socketio.on('message')
 def handle_connect(msg):
+
     connection.new_connection()
+
     message_sending = {"message": msg, "connections": connection.num_conn()}
     emit("new connection", message_sending, broadcast=True)
 

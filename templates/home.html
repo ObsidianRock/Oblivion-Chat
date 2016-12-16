@@ -3,31 +3,32 @@
 {% block head %}
     {{ super() }}
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function(){
 
            var socket = io.connect('http://127.0.0.1:5000');
 
            socket.on('connect', function() {
+
                 socket.send('i am connected');
 
                  });
 
            socket.on('new connection', function(msg) {
 
-               Materialize.toast(msg.message, 1000)
-                console.log(msg.connections);
+               Materialize.toast(msg.message, 1200)
+                $("#conn_count").text(msg.connections + '  Online');
            });
 
            socket.on('chat_response', function(msg){
-         $("#messages").append('<li class="collection-item">'+'<span class="title">'+'Some person'+'</span>'+ '<p>' + msg.message + '</p>' +'</li>');
+            $("#messages").append('<li class="collection-item">'+'<span class="title">'+'Some person'+'</span>'+ '<p>' + msg.message + '</p>' +'</li>');
            });
 
            $("#sendbutton").on('click', function(){
                 socket.emit("chat_message", {"message":$("#mymessage").val()});
                 $("#mymessage").val('');
            });
+
 
         });
 
@@ -43,7 +44,7 @@
         <div class="col s12">
           <div class="card">
             <div class="card-content">
-              <ul class="collection" id="messages"><span id="conn_count" class="new badge red">people in the room</span></ul>
+              <ul class="collection" id="messages"><span id="conn_count" class="badge red white-text"></span></ul>
             </div>
               <div class="card-content">
           <input placeholder="Send chat" type="text" id="mymessage">
