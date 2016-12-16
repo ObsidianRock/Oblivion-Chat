@@ -1,5 +1,5 @@
 from database import Message
-from form import LoginForm
+from form import LoginForm, RegisterForm
 
 from flask import Flask, render_template, session
 from flask_socketio import SocketIO, send, emit
@@ -32,6 +32,12 @@ connection = Connection()
 def main():
     form = LoginForm()
     return render_template('main.html', form=form)
+
+
+@app.route('/register')
+def register():
+    form = RegisterForm()
+    return render_template('register.html', form=form)
 
 
 @socketio.on('chat_message')
