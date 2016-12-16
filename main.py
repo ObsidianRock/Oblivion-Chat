@@ -1,4 +1,5 @@
 from database import Message
+from form import LoginForm
 
 from flask import Flask, render_template, session
 from flask_socketio import SocketIO, send, emit
@@ -29,10 +30,8 @@ connection = Connection()
 
 @app.route('/')
 def main():
-    return render_template('main.html')
-
-
-
+    form = LoginForm()
+    return render_template('main.html', form=form)
 
 
 @socketio.on('chat_message')

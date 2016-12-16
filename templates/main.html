@@ -1,52 +1,48 @@
 {% extends 'base.html' %}
 
-
 {% block page_content %}
 
-  <div class="container">
+<div class="container">
 
-  <div class="row">
-  <div class="col s9 offset-s1">
-  <div class="card">
+    <div class="row">
+        <div class="col s9 offset-s1">
 
+            <div class="card">
+                <div class="card-content black-text">
+                <span class="card-title">Login</span>
+                    <div class="row">
 
-      <div class="card-content black-text">
-        <span class="card-title">Login</span>
+                    <form class="col s12" method={{url_for('main')}}>
+                        <div class="row">
+                            <div class="input-field col s12 black-text">
+                                {{form.username}}{{form.username.label(class="black-text")}}
+                            </div>
+                        </div>
 
-          <div class="row">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{form.password}}{{form.password.label(class="black-text")}}
+                            </div>
+                        </div>
 
-              <form class="col s12" method=post>
-                <div class="row">
-                  <div class="input-field col s12 black-text">
-                    <input placeholder="Username"  type="text" >
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input placeholder="Password"  type="text">
-                  </div>
-                </div>
-              <div class="row">
-                  <input type="submit" value="Submit" class="btn-large red darken-4">
+                        <div class="row">
+                            {{form.login(class="btn-large red darken-4")}}
+                        </div>
+                    </form>
 
-              </div>
-            </form>
-
-
-             <div class="row">
-                 <div class="col s12" >
-                    <button class="btn-large red darken-4">Register</button>
+                    </div>
                 </div>
             </div>
 
+            <div class="row">
+                 <div class="col s12" >
+                     <button class="btn red darken-4">Register</button>
+                </div>
+            </div>
 
         </div>
-        </div>
-
-      </div>
-  </div>
-</div>
-<br><br>
+    </div>
+    <br><br>
 </div>
 
 
