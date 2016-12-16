@@ -1,30 +1,29 @@
 import rethinkdb as r
 
 
-class Message:
+class DataBase:
+    def __init__(self, db):
+        self.db = db
+        self.conn = r.connect(host='localhost', port=28015, db=self.db)
 
-    def __init__(self):
-
-        self.db = 'Chat'
-        self.table = 'messages'
-
+    def create_table(self, table):
         try:
-            self.conn = r.connect(host='localhost', port=28015, db=self.db)
-            print('Connected')
+            r.db(self.db).table_create(table).run(self.conn)
+            print('table created')
         except:
-            self.conn = None
-            print('Cant connect')
+            print('table exists')
+
+
+class Message(DataBase):
+
+    def __init__(self, db, table):
+        super().__init__(db)
+        self.table = table
 
     def commit(self, item):
-        print(item)
         try:
             r.db(self.db).table(self.table).insert({'message': item}).run(self.conn)
         except Exception as e:
             print(str(e))
             print('couldnt insert items')
 
-    def create_table(self):
-        try:
-            r.db(self.db).table_create(self.table).run(self.conn)
-        except:
-            print('table exists')
