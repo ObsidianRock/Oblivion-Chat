@@ -1,5 +1,7 @@
 import rethinkdb as r
 
+from main import bcrypt
+
 
 class DataBase:
     def __init__(self, db):
@@ -26,4 +28,32 @@ class Message(DataBase):
         except Exception as e:
             print(str(e))
             print('couldnt insert items')
+
+
+class User(DataBase):
+
+    def __init__(self, db, table):
+        super().__init__(db)
+        self.table = table
+
+    def insert_user(self, username, password):
+
+        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        try:
+            r.db(self.db).table(self.table).insert({'User': username,
+                                                    'Password': pw_hash}).run(self.conn)
+        except Exception as e:
+            print(str(e))
+            print('couldnt insert items')
+
+    def check_password(self, username, password):
+
+        password_hash = self.get_user_password(username)['Password']
+        return bcrypt.check_password_hash(password_hash, password)
+
+    def get_user_password(self, username):
+        obj = r.db(self.db).table(self.table).filter({'User': username}).run(self.conn)
+        return obj.next()
+
+
 
