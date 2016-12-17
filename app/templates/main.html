@@ -13,6 +13,8 @@
                     <div class="row">
 
                     <form class="col s12" action="{{url_for('main.main_page')}}" method="POST">
+                        {{ form.csrf_token }}
+
                         <div class="row">
                             <div class="input-field col s12 black-text">
                                 {{form.username}}{{form.username.label(class="black-text")}}

@@ -12,7 +12,7 @@ Userdb = User('Chat', 'User')
 @main.route('/', methods=['GET', 'POST'])
 def main_page():
     form = LoginForm()
-    if request.method == 'POST':
+    if form.validate_on_submit():
         if Userdb.check_user_exists(form.username.data) and\
                Userdb.check_password(form.username.data, form.password.data):
             user = Userdb
@@ -22,9 +22,13 @@ def main_page():
     return render_template('main.html', form=form)
 
 
-@main.route('/register')
+@main.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+    if form.validate_on_submit():
+        Userdb.insert_user(form.username.data, form.password.data)
+        print('inserted new user')
+        return redirect(url_for('main.main_page'))
     return render_template('register.html', form=form)
 
 
