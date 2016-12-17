@@ -16,7 +16,11 @@
 
            socket.on('new connection', function(msg) {
 
-               Materialize.toast(msg.message, 1200)
+                var n = msg.message.indexOf('not');
+
+               if (n == -1) {
+                   Materialize.toast(msg.message, 1200)
+               }
                 $("#conn_count").text(msg.connections + '  Online');
            });
 

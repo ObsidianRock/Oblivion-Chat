@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, session
 from flask_login import login_user, login_required
 
 from . import main
@@ -18,6 +18,7 @@ def main_page():
             user = Userdb
             user.id = form.username.data
             login_user(user)
+            session['username'] = form.username.data
             flash('logged in', 'green accent-3')
             return redirect(url_for('main.chat'))
     return render_template('main.html', form=form)

@@ -3,12 +3,16 @@
 class Connection:
     def __init__(self):
         self.conn = 0
+        self.users = []
 
-    def new_connection(self):
-        self.conn += 1
+    def user_leave(self, user):
+        self.users.remove(user)
 
-    def left_conn(self):
-        self.conn += -1
+    def num_users(self):
+        return len(self.users)
 
-    def num_conn(self):
-        return self.conn
+    def add_user(self, user):
+        self.users.append(user)
+
+    def user_list(self):
+        return self.users
