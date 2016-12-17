@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required
 
 from . import main
@@ -18,6 +18,7 @@ def main_page():
             user = Userdb
             user.id = form.username.data
             login_user(user)
+            flash('logged in', 'green accent-3')
             return redirect(url_for('main.chat'))
     return render_template('main.html', form=form)
 
@@ -27,7 +28,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         Userdb.insert_user(form.username.data, form.password.data)
-        print('inserted new user')
+        flash('You are registered', 'green accent-3')
         return redirect(url_for('main.main_page'))
     return render_template('register.html', form=form)
 
