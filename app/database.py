@@ -62,6 +62,32 @@ class User(UserMixin, DataBase):
         return obj.next()
 
 
+class Room(DataBase):
+
+    def __init__(self, db, table):
+        super().__init__(db)
+        self.table = table
+        self.users = []
+        self.user_count = 0
+
+    def add_user(self, user):
+        r.db(self.db).table(self.table).insert({'Room_user': user}).run(self.conn)
+
+    def user_leave(self, user):
+        r.db(self.db).table(self.table).filter({'Room_user': user}).delete().run(self.conn)
+
+    def num_users(self):
+        return len(self.users)
+
+    def user_list(self):
+        users = r.db(self.db).table(self.table).run(self.conn)
+        user_list = []
+        for user in users:
+            user_list.append(user['Room_user'])
+        user_count = len(user_list)
+        return user_list, user_count
+
+
 @login_manager.user_loader
 def user_loader(username):
     user = User('Chat', 'User')

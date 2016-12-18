@@ -37,4 +37,6 @@ def register():
 @main.route('/chat')
 @login_required
 def chat():
-    return render_template('chat.html')
+    user = session['username']
+
+    return render_template('chat.html', user=user)

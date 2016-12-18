@@ -1,10 +1,11 @@
 from flask import session
 from flask_socketio import emit
 from ..utils import Connection
-from ..database import Message
+from ..database import Message, Room
 from app import socketio
 
-connection = Connection()
+
+connection = Room('Chat', 'Room')
 message = Message('Chat', 'messages')
 
 
@@ -17,19 +18,18 @@ def handle_message(msg):
 
 @socketio.on('message')
 def handle_connect(msg):
+    users, user_count = connection.user_list()
 
-    if session['username'] not in connection.user_list():
-
-        connection.add_user(session['username'])
-        message_sending = {"message": msg, "connections": connection.num_users()}
-
-    else:
+    if session['username'] in users:
         msg = 'not'
-        message_sending = {"message": msg, "connections": connection.num_users()}
+        message_sending = {"message": msg, "connections": user_count}
+    else:
+        connection.add_user(session['username'])
+        message_sending = {"message": msg, "connections": user_count}
 
     emit("new connection", message_sending, broadcast=True)
 
 
 @socketio.on('disconnect')
-def handle_disconnect()
-
+def handle_disconnect():
+    pass

@@ -1,14 +1,11 @@
 from flask import Flask
 from flask_socketio import SocketIO
-
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-
 
 socketio = SocketIO()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-
 
 def create_app(debug=True):
 

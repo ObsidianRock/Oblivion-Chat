@@ -17,7 +17,7 @@
            socket.on('new connection', function(msg) {
 
                 var n = msg.message.indexOf('not');
-
+                console.log(msg.message);
                if (n == -1) {
                    Materialize.toast(msg.message, 1200)
                }
@@ -42,15 +42,15 @@
 
 {% block page_content %}
 
-    <div class='container'>
 
       <div class="row">
-        <div class="col s12">
+        <div class="col s9">
           <div class="card">
             <div class="card-content">
               <ul class="collection" id="messages"><span id="conn_count" class="badge red white-text"></span></ul>
             </div>
               <div class="card-content">
+              <p>{{user}}</p>
           <input placeholder="Send chat" type="text" id="mymessage">
             </div>
 
@@ -59,7 +59,27 @@
             </div>
           </div>
         </div>
+
+        <div class="col s3">
+            <div class="card-panel">
+              <table>
+                <thead>
+                  <tr>
+                      <th data-field="id">Users Online</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                      <td>john</td>
+                  </tr>
+                  <tr>
+                      <td>john</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+
       </div>
 
-    </div>
 {% endblock %}
