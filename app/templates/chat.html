@@ -22,7 +22,14 @@
                    Materialize.toast(msg.message, 1200)
                }
                 $("#conn_count").text(msg.connections + '  Online');
-           });
+
+            });
+
+            socket.on('user_left', function(msg) {
+                Materialize.toast(msg.message, 1200)
+                $("#conn_count").text(msg.connections + '  Online')
+                socket.disconnect()
+            });
 
            socket.on('chat_response', function(msg){
             $("#messages").append('<li class="collection-item">'+'<span class="title">'+'Some person'+'</span>'+ '<p>' + msg.message + '</p>' +'</li>');
@@ -33,6 +40,9 @@
                 $("#mymessage").val('');
            });
 
+         $("#closebutton").on('click', function(){
+            socket.emit("leave_room", {} );
+             });
 
         });
 
@@ -55,7 +65,9 @@
             </div>
 
             <div class="card-action">
-                <button class="btn" id="sendbutton">send</button>
+                <button class="btn" id="sendbutton">Send</button>
+                <a href="{{url_for('main.dashboard')}}" class="btn red darken-4" id="closebutton">Leave room</a>
+
             </div>
           </div>
         </div>
@@ -69,12 +81,12 @@
                   </tr>
                 </thead>
                 <tbody>
+                {% for user in user_list %}
                   <tr>
-                      <td>john</td>
+                      <td>{{user}}</td>
                   </tr>
-                  <tr>
-                      <td>john</td>
-                  </tr>
+                {% endfor %}
+
                 </tbody>
               </table>
             </div>

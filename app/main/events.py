@@ -1,6 +1,5 @@
-from flask import session
+from flask import session, redirect, url_for
 from flask_socketio import emit
-from ..utils import Connection
 from ..database import Message, Room
 from app import socketio
 
@@ -30,6 +29,19 @@ def handle_connect(msg):
     emit("new connection", message_sending, broadcast=True)
 
 
-@socketio.on('disconnect')
-def handle_disconnect():
-    pass
+@socketio.on('leave_room')
+def handle_leave_room(obj):
+
+    user = session['username']
+    print(user)
+    connection.user_leave(user)
+    users, user_count = connection.user_list()
+
+    try:
+        del session['username']
+    except Exception as e:
+        print(str(e))
+
+    message_sending = {'message': 'user {} left room'.format(user), "connections": user_count}
+    emit('user_left', message_sending, broadcast=True)
+

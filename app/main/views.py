@@ -4,9 +4,10 @@ from flask_login import login_user, login_required
 from . import main
 from .form import LoginForm, RegisterForm
 
-from ..database import User
+from ..database import User, Room
 
 Userdb = User('Chat', 'User')
+room_users = Room('Chat', 'Room')
 
 
 @main.route('/', methods=['GET', 'POST'])
@@ -38,5 +39,11 @@ def register():
 @login_required
 def chat():
     user = session['username']
+    user_list, count = room_users.user_list()
+    return render_template('chat.html', user=user, user_list=user_list)
 
-    return render_template('chat.html', user=user)
+
+@main.route('/Dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
