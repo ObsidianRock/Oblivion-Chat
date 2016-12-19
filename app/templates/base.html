@@ -34,7 +34,7 @@
               {% endif %}
 
               {% if current_user.is_authenticated %}
-                <li><a class="white-text red darken-4" href="{{url_for('main.logout')}}">Logout</a></li>
+                <li><a id="logout" class="white-text red darken-4" href="{{url_for('main.logout')}}">Logout</a></li>
               {% endif %}
 
               <li><a href="#"></a></li>
@@ -53,7 +53,7 @@
               {% if current_user.is_authenticated %}
                 <li><a class="white-text red accent-3" href="{{url_for('main.logout')}}">Logout</a></li>
                {% endif %}
-                
+
                 <li><a href="#"></a></li>
               <li><a href="#"></a></li>
             </ul>

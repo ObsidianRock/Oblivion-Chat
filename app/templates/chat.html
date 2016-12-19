@@ -48,6 +48,11 @@
 
              });
 
+        $("#logout").on('click', function(){
+            socket.emit("leave_room", {} );
+
+         });
+
         });
 
     </script>
