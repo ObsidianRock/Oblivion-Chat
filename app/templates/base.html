@@ -25,22 +25,36 @@
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
 
-              <li><a class="white-text red darken-4" href="{{url_for('main.main_page')}}">Home</a></li>
+              {% if current_user.is_authenticated %}
+                <li><a class="white-text red darken-4" href="{{url_for('main.main_page')}}">Home</a></li>
+              {% endif %}
 
               {% if not current_user.is_authenticated %}
                 <li><a class="white-text red darken-4" href="{{url_for('main.register')}}">Register</a></li>
               {% endif %}
+
               {% if current_user.is_authenticated %}
                 <li><a class="white-text red darken-4" href="{{url_for('main.logout')}}">Logout</a></li>
-               {% endif %}
+              {% endif %}
+
               <li><a href="#"></a></li>
               <li><a href="#"></a></li>
               <li><a href="#"></a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-              <li><a class="white-text btn red accent-3" href="{{url_for('main.register')}}">Register</a></li>
-              <li><a class="white-text btn red accent-3" href="{{url_for('main.main_page')}}">Home</a></li>
-              <li><a href="#"></a></li>
+
+
+              {% if current_user.is_authenticated %}
+                <li><a class="white-text red accent-3" href="{{url_for('main.main_page')}}">Home</a></li>
+              {% endif %}
+              {% if not current_user.is_authenticated %}
+                <li><a class="white-text red accent-3" href="{{url_for('main.register')}}">Register</a></li>
+              {% endif %}
+              {% if current_user.is_authenticated %}
+                <li><a class="white-text red accent-3" href="{{url_for('main.logout')}}">Logout</a></li>
+               {% endif %}
+                
+                <li><a href="#"></a></li>
               <li><a href="#"></a></li>
             </ul>
           </div>
