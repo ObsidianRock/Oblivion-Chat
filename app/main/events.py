@@ -11,9 +11,9 @@ message = Message('Chat', 'Message')
 @socketio.on('chat_message')
 def handle_message(msg):
 
-    message.commit(msg['message'])
+    message.commit(msg['message'],msg['user'] )
 
-    emit('chat_response', {'message': msg['message']}, broadcast=True)  # takes whatever message coming in and send to everyone connected
+    emit('chat_response', {'message': msg['message'], 'user': msg['user']}, broadcast=True)  # takes whatever message coming in and send to everyone connected
 
 
 @socketio.on('message')
@@ -28,8 +28,6 @@ def handle_connect(msg):
         connection.add_user(session['username'])
         users, user_count = connection.user_list()
         message_sending = {"message": msg, "connections": user_count, "users": users}
-
-   
 
     emit("new connection", message_sending, broadcast=True)
 

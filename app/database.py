@@ -23,9 +23,9 @@ class Message(DataBase):
         super().__init__(db)
         self.table = table
 
-    def commit(self, item):
+    def commit(self, item, user):
         try:
-            r.db(self.db).table(self.table).insert({'message': item}).run(self.conn)
+            r.db(self.db).table(self.table).insert({'message': item, 'user': user}).run(self.conn)
         except Exception as e:
             print(str(e))
             print('couldnt insert items')

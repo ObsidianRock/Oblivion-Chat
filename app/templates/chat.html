@@ -43,11 +43,11 @@
             });
 
            socket.on('chat_response', function(msg){
-            $("#messages").append('<li class="collection-item">'+'<span class="title">'+'Some person'+'</span>'+ '<p>' + msg.message + '</p>' +'</li>');
+            $("#messages").append('<li class="collection-item">'+'<span class="title">' + msg.user + '</span>'+ '<p>' + msg.message + '</p>' +'</li>');
            });
 
            $("#sendbutton").on('click', function(){
-                socket.emit("chat_message", {"message":$("#mymessage").val()});
+                socket.emit("chat_message", {"message":$("#mymessage").val(), "user":$("#current_user").text()});
                 $("#mymessage").val('');
            });
 
@@ -83,7 +83,7 @@
               <ul class="collection" id="messages"><span id="stuff" class="badge red white-text"></span></ul>
             </div>
               <div class="card-content">
-              <p>{{user}}</p>
+              <p id="current_user">{{user}}</p>
           <input placeholder="Send chat" type="text" id="mymessage">
             </div>
 
