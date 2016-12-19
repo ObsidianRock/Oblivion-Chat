@@ -22,7 +22,8 @@ def main_page():
             session['username'] = form.username.data
             flash('logged in', 'green accent-3')
             return redirect(url_for('main.chat'))
-    return render_template('main.html', form=form)
+    return render_template('main.html',
+                           form=form)
 
 
 @main.route('/logout', methods=['GET'])
@@ -40,15 +41,16 @@ def register():
         Userdb.insert_user(form.username.data, form.password.data)
         flash('You are registered', 'green accent-3')
         return redirect(url_for('main.main_page'))
-    return render_template('register.html', form=form)
+    return render_template('register.html',
+                           form=form)
 
 
 @main.route('/chat')
 @login_required
 def chat():
     user = session['username']
-    user_list, count = room_users.user_list()
-    return render_template('chat.html', user=user, user_list=user_list)
+    return render_template('chat.html',
+                           user=user)
 
 
 @main.route('/Dashboard')

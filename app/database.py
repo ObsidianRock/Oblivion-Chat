@@ -31,6 +31,7 @@ class Message(DataBase):
             print('couldnt insert items')
 
 
+
 class User(UserMixin, DataBase):
 
     def __init__(self, db, table):

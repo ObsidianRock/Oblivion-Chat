@@ -8,6 +8,12 @@
 
            var socket = io.connect('http://' + document.domain + ':' + location.port);
 
+            var TypingCheck = {
+                typing: false,
+                num: 0
+            };
+
+
            function update_list(conn){
               $("#user_online").empty()
              for(var i = 0; i < conn.users.length; i++ ) {
@@ -15,26 +21,23 @@
              };
            };
 
-
            socket.on('connect', function() {
-
                 socket.send('i am connected');
-
-                 });
+           });
 
            socket.on('new connection', function(msg) {
-
-                var n = msg.message.indexOf('not');
-
-                console.log(msg.message);
+               var n = msg.message.indexOf('not');
 
                if (n == -1) {
                    Materialize.toast(msg.message, 1200)
+
                }
 
                 $("#stuff").text(msg.connections);
                 update_list(msg);
+
             });
+
 
             socket.on('user_left', function(msg) {
                 Materialize.toast(msg.message, 1200);
@@ -43,7 +46,18 @@
             });
 
            socket.on('chat_response', function(msg){
-            $("#messages").append('<li class="collection-item">'+'<span class="title">' + msg.user + '</span>'+ '<p>' + msg.message + '</p>' +'</li>');
+                $("#messages").append('<li class="collection-item">'+'<span class="title">' + msg.user + '</span>'+ '<p>' + msg.message + '</p>' +'</li>');
+           });
+
+           socket.on('typing_response',function(msg){
+
+                console.log(typing_check.num)
+
+                if (typing_check.num < 1) {
+                    $("#type_span").text(msg.message );
+                    $("#type_span").fadeIn(1200).fadeOut(1500)
+                 }
+
            });
 
            $("#sendbutton").on('click', function(){
@@ -51,10 +65,10 @@
                 $("#mymessage").val('');
            });
 
-         $("#closebutton").on('click', function(){
-            socket.emit("leave_room", {} );
-            update_list(msg);
 
+         $("#closebutton").on('click', function(){
+                socket.emit("leave_room", {} );
+                update_list(msg);
              });
 
         $("#logout").on('click', function(){
@@ -66,6 +80,18 @@
                     socket.emit("leave_room", {} );
                     update_list(msg);
                  });
+
+
+         $("#mymessage").on('keydown', function (event) {
+
+             if (!(event.ctrlKey || event.metaKey || event.altKey)) {
+                socket.emit('typing', {"user":$("#current_user").text()})
+
+             };
+
+             });
+
+
         });
 
     </script>
@@ -82,15 +108,16 @@
 
               <ul class="collection" id="messages"><span id="stuff" class="badge red white-text"></span></ul>
             </div>
-              <div class="card-content">
-              <p id="current_user">{{user}}</p>
-          <input placeholder="Send chat" type="text" id="mymessage">
-            </div>
+              <div class="card-content" id="card"><span id="type_span" class="badge blue white-text"></span>
+                <p id="current_user">{{user}}</p>
+
+                 <input placeholder="Send chat" type="text" id="mymessage">
+
+              </div>
 
             <div class="card-action">
                 <button class="btn" id="sendbutton">Send</button>
                 <a href="{{url_for('main.dashboard')}}" class="btn red darken-4" id="closebutton">Leave room</a>
-
             </div>
           </div>
         </div>

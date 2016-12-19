@@ -11,9 +11,10 @@ message = Message('Chat', 'Message')
 @socketio.on('chat_message')
 def handle_message(msg):
 
-    message.commit(msg['message'],msg['user'] )
+    message.commit(msg['message'], msg['user'])
 
-    emit('chat_response', {'message': msg['message'], 'user': msg['user']}, broadcast=True)  # takes whatever message coming in and send to everyone connected
+    emit('chat_response', {'message': msg['message'],
+                           'user': msg['user']}, broadcast=True)  # takes whatever message coming in and send to everyone connected
 
 
 @socketio.on('message')
@@ -23,11 +24,16 @@ def handle_connect(msg):
 
     if session['username'] in users:
         msg = 'not'
-        message_sending = {"message": msg, "connections": user_count, "users": users}
+        message_sending = {"message": msg,
+                           "connections": user_count,
+                           "users": users}
     else:
         connection.add_user(session['username'])
         users, user_count = connection.user_list()
-        message_sending = {"message": msg, "connections": user_count, "users": users}
+        message_sending = {"message": msg,
+                           "connections": user_count,
+                           "users": users,
+                           'new_user': session['username']}
 
     emit("new connection", message_sending, broadcast=True)
 
@@ -52,3 +58,9 @@ def handle_leave_room(obj):
     emit('user_left', message_sending, broadcast=True)
 
 
+@socketio.on('typing')
+def handle_tying(obj):
+
+    message_sending = {"message": "{} is typing".format(obj['user'])}
+
+    emit('typing_response', message_sending, broadcast=True)
