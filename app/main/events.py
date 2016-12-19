@@ -5,7 +5,7 @@ from app import socketio
 
 
 connection = Room('Chat', 'Room')
-message = Message('Chat', 'messages')
+message = Message('Chat', 'Message')
 
 
 @socketio.on('chat_message')
@@ -18,6 +18,7 @@ def handle_message(msg):
 
 @socketio.on('message')
 def handle_connect(msg):
+
     users, user_count = connection.user_list()
 
     if session['username'] in users:
@@ -25,7 +26,10 @@ def handle_connect(msg):
         message_sending = {"message": msg, "connections": user_count}
     else:
         connection.add_user(session['username'])
+        users, user_count = connection.user_list()
         message_sending = {"message": msg, "connections": user_count}
+
+    print(message_sending['connections'])
 
     emit("new connection", message_sending, broadcast=True)
 
@@ -35,14 +39,16 @@ def handle_leave_room(obj):
 
     user = session['username']
     connection.user_leave(user)
-    users, user_count = connection.user_list()
 
     try:
         del session['username']
     except Exception as e:
         print(str(e))
 
+    users, user_count = connection.user_list()
+    print(user_count)
     message_sending = {'message': 'user {} left room'.format(user), "connections": user_count}
+
     emit('user_left', message_sending, broadcast=True)
 
 

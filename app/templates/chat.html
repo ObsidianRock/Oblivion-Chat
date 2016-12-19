@@ -21,17 +21,20 @@
            socket.on('new connection', function(msg) {
 
                 var n = msg.message.indexOf('not');
+
                 console.log(msg.message);
+
                if (n == -1) {
                    Materialize.toast(msg.message, 1200)
                }
-                update_count(msg.connections);
+
+                $("#stuff").text(msg.connections);
             });
 
             socket.on('user_left', function(msg) {
-                Materialize.toast(msg.message, 1200)
-                update_count(msg.connections);
-                socket.disconnect()
+                Materialize.toast(msg.message, 1200);
+                $("#stuff").text(msg.connections);
+
             });
 
            socket.on('chat_response', function(msg){
@@ -45,6 +48,7 @@
 
          $("#closebutton").on('click', function(){
             socket.emit("leave_room", {} );
+
 
              });
 
@@ -66,7 +70,8 @@
         <div class="col s9">
           <div class="card">
             <div class="card-content">
-              <ul class="collection" id="messages"><span id="conn_count" class="badge red white-text"></span></ul>
+
+              <ul class="collection" id="messages"><span id="stuff" class="badge red white-text"></span></ul>
             </div>
               <div class="card-content">
               <p>{{user}}</p>
