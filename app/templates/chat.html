@@ -8,6 +8,10 @@
 
            var socket = io.connect('http://' + document.domain + ':' + location.port);
 
+           function update_count(conn){
+             $("#conn_count").text(conn + '  Online')
+           }
+
            socket.on('connect', function() {
 
                 socket.send('i am connected');
@@ -21,13 +25,12 @@
                if (n == -1) {
                    Materialize.toast(msg.message, 1200)
                }
-                $("#conn_count").text(msg.connections + '  Online');
-
+                update_count(msg.connections);
             });
 
             socket.on('user_left', function(msg) {
                 Materialize.toast(msg.message, 1200)
-                $("#conn_count").text(msg.connections + '  Online')
+                update_count(msg.connections);
                 socket.disconnect()
             });
 
@@ -42,6 +45,7 @@
 
          $("#closebutton").on('click', function(){
             socket.emit("leave_room", {} );
+
              });
 
         });

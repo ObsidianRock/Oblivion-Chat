@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash, session
-from flask_login import login_user, login_required
+from flask_login import login_user, login_required, logout_user
 
 from . import main
 from .form import LoginForm, RegisterForm
@@ -23,6 +23,14 @@ def main_page():
             flash('logged in', 'green accent-3')
             return redirect(url_for('main.chat'))
     return render_template('main.html', form=form)
+
+
+@main.route('/logout', methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    flash('You have been logged out.', 'green accent-3')
+    return redirect(url_for('main.main_page'))
 
 
 @main.route('/register', methods=['GET', 'POST'])

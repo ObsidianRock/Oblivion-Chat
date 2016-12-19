@@ -12,6 +12,7 @@ message = Message('Chat', 'messages')
 def handle_message(msg):
 
     message.commit(msg['message'])
+
     emit('chat_response', {'message': msg['message']}, broadcast=True)  # takes whatever message coming in and send to everyone connected
 
 
@@ -33,7 +34,6 @@ def handle_connect(msg):
 def handle_leave_room(obj):
 
     user = session['username']
-    print(user)
     connection.user_leave(user)
     users, user_count = connection.user_list()
 
@@ -44,4 +44,5 @@ def handle_leave_room(obj):
 
     message_sending = {'message': 'user {} left room'.format(user), "connections": user_count}
     emit('user_left', message_sending, broadcast=True)
+
 

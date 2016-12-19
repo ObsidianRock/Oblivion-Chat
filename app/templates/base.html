@@ -24,10 +24,15 @@
             <a href="#!" class="brand-logo center">Oblivion</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
+
               <li><a class="white-text red darken-4" href="{{url_for('main.main_page')}}">Home</a></li>
 
-              <li><a class="white-text red darken-4" href="{{url_for('main.register')}}">Register</a></li>
-
+              {% if not current_user.is_authenticated %}
+                <li><a class="white-text red darken-4" href="{{url_for('main.register')}}">Register</a></li>
+              {% endif %}
+              {% if current_user.is_authenticated %}
+                <li><a class="white-text red darken-4" href="{{url_for('main.logout')}}">Logout</a></li>
+               {% endif %}
               <li><a href="#"></a></li>
               <li><a href="#"></a></li>
               <li><a href="#"></a></li>
