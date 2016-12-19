@@ -23,13 +23,13 @@ def handle_connect(msg):
 
     if session['username'] in users:
         msg = 'not'
-        message_sending = {"message": msg, "connections": user_count}
+        message_sending = {"message": msg, "connections": user_count, "users": users}
     else:
         connection.add_user(session['username'])
         users, user_count = connection.user_list()
-        message_sending = {"message": msg, "connections": user_count}
+        message_sending = {"message": msg, "connections": user_count, "users": users}
 
-    print(message_sending['connections'])
+   
 
     emit("new connection", message_sending, broadcast=True)
 
@@ -46,8 +46,10 @@ def handle_leave_room(obj):
         print(str(e))
 
     users, user_count = connection.user_list()
-    print(user_count)
-    message_sending = {'message': 'user {} left room'.format(user), "connections": user_count}
+
+    message_sending = {'message': 'user {} left room'.format(user),
+                       "connections": user_count,
+                       "users": users}
 
     emit('user_left', message_sending, broadcast=True)
 

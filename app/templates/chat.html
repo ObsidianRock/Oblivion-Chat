@@ -8,9 +8,13 @@
 
            var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-           function update_count(conn){
-             $("#conn_count").text(conn + '  Online')
-           }
+           function update_list(conn){
+              $("#user_online").empty()
+             for(var i = 0; i < conn.users.length; i++ ) {
+                $("#user_online").append("<tr><td>" + conn.users[i] + "</td></tr>");
+             };
+           };
+
 
            socket.on('connect', function() {
 
@@ -29,12 +33,13 @@
                }
 
                 $("#stuff").text(msg.connections);
+                update_list(msg);
             });
 
             socket.on('user_left', function(msg) {
                 Materialize.toast(msg.message, 1200);
                 $("#stuff").text(msg.connections);
-
+                update_list(msg);
             });
 
            socket.on('chat_response', function(msg){
@@ -48,15 +53,19 @@
 
          $("#closebutton").on('click', function(){
             socket.emit("leave_room", {} );
-
+            update_list(msg);
 
              });
 
         $("#logout").on('click', function(){
             socket.emit("leave_room", {} );
-
+            update_list(msg);
          });
 
+         $("#logout_2").on('click', function(){
+                    socket.emit("leave_room", {} );
+                    update_list(msg);
+                 });
         });
 
     </script>
@@ -94,13 +103,7 @@
                       <th data-field="id">Users Online</th>
                   </tr>
                 </thead>
-                <tbody>
-                {% for user in user_list %}
-                  <tr>
-                      <td>{{user}}</td>
-                  </tr>
-                {% endfor %}
-
+                <tbody id="user_online">
                 </tbody>
               </table>
             </div>
