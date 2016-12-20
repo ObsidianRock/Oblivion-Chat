@@ -49,8 +49,13 @@ def register():
 @login_required
 def chat():
     user = session['username']
+    color = Userdb.get_color(user)
+    color_split = color.split(' ')
+    print(color_split)
+    new_color = "{}-text text-{}".format(color_split[0], color_split[1])
     return render_template('chat.html',
-                           user=user)
+                           user=user,
+                           color=new_color)
 
 
 @main.route('/Dashboard')

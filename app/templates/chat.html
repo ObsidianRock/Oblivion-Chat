@@ -4,15 +4,11 @@
     {{ super() }}
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script type="text/javascript" charset="utf-8">
+
+
         $(document).ready(function(){
 
            var socket = io.connect('http://' + document.domain + ':' + location.port);
-
-            var TypingCheck = {
-                typing: false,
-                num: 0
-            };
-
 
            function update_list(conn){
               $("#user_online").empty()
@@ -46,13 +42,12 @@
             });
 
            socket.on('chat_response', function(msg){
-                $("#messages").append('<li class="collection-item">'+'<span class="title">' + msg.user + '</span>'+ '<p>' + msg.message + '</p>' +'</li>');
+                $("#messages").append('<li class="collection-item">'+'<span class="title {{color}}">' + msg.user + '</span>' + '<p id=' + msg.user + '>' + msg.message + '</p>' +'</li>');
            });
 
+
            socket.on('typing_response',function(msg){
-
-                console.log(typing_check.num)
-
+                                                    // need to come back to this again, maybe just hava solid block of color
                 if (typing_check.num < 1) {
                     $("#type_span").text(msg.message );
                     $("#type_span").fadeIn(1200).fadeOut(1500)
@@ -104,12 +99,14 @@
       <div class="row">
         <div class="col s9">
           <div class="card">
-            <div class="card-content">
+            <div class="card-content " >
 
-              <ul class="collection" id="messages"><span id="stuff" class="badge red white-text"></span></ul>
+              <ul class="collection " id="messages"><span id="stuff" class="badge red white-text"></span>
+
+              </ul>
             </div>
               <div class="card-content" id="card"><span id="type_span" class="badge blue white-text"></span>
-                <p id="current_user">{{user}}</p>
+                <p id="current_user" >{{user}}</p>
 
                  <input placeholder="Send chat" type="text" id="mymessage">
 

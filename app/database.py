@@ -2,6 +2,22 @@
 import rethinkdb as r
 from . import login_manager, bcrypt
 from flask_login import UserMixin
+from random import randint
+
+colors = ["#b71c1c", "#880e4f", "#4a148c", "#311b92", "#1a237e", "#0d47a1",
+          "#01579b", "#006064", "#004d40", "#1b5e20", "#33691e", "#827717",
+          "#e65100", "#bf360c", "#3e2723", "#37474f", "#263238", "#212121"]
+
+colors2 = ["red darken-4", "purple darken-4", "pink darken-4", "deep-purple darken-4", "indigo darken-4",
+           "blue darken-4", "light-blue darken-4", "cyan darken-4", "teal darken-4", "green darken-4",
+           "light-green darken-4", "lime darken-4", "orange darken-4", "deep-orange darken-4", "brown darken-4",
+           "blue-grey darken-4", "grey darken-4", "yellow darken-4"]
+
+
+def pick_color():
+    num = randint(0, len(colors2))
+    color = colors2[num]
+    return color
 
 
 class DataBase:
@@ -31,7 +47,6 @@ class Message(DataBase):
             print('couldnt insert items')
 
 
-
 class User(UserMixin, DataBase):
 
     def __init__(self, db, table):
@@ -47,7 +62,8 @@ class User(UserMixin, DataBase):
             pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
             try:
                 r.db(self.db).table(self.table).insert({'User': username,
-                                                        'Password': pw_hash}).run(self.conn)
+                                                        'Password': pw_hash,
+                                                        'color': pick_color()}).run(self.conn)
             except Exception as e:
                 print(str(e))
                 print('couldnt insert items')
@@ -62,6 +78,11 @@ class User(UserMixin, DataBase):
         obj = r.db(self.db).table(self.table).filter({'User': username}).run(self.conn)
         return obj.next()
 
+    def get_color(self, user):
+        obj = r.db(self.db).table(self.table).filter({'User': user}).run(self.conn)
+        for o in obj:
+            print(o['color'])
+            return o['color']
 
 class Room(DataBase):
 
@@ -70,6 +91,7 @@ class Room(DataBase):
         self.table = table
 
     def add_user(self, user):
+
         r.db(self.db).table(self.table).insert({'Room_user': user}).run(self.conn)
 
     def user_leave(self, user):

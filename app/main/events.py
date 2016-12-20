@@ -8,6 +8,8 @@ connection = Room('Chat', 'Room')
 message = Message('Chat', 'Message')
 
 
+
+
 @socketio.on('chat_message')
 def handle_message(msg):
 
@@ -27,6 +29,7 @@ def handle_connect(msg):
         message_sending = {"message": msg,
                            "connections": user_count,
                            "users": users}
+
     else:
         connection.add_user(session['username'])
         users, user_count = connection.user_list()
