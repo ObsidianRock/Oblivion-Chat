@@ -4,9 +4,6 @@ from . import login_manager, bcrypt
 from flask_login import UserMixin
 from random import randint
 
-colors = ["#b71c1c", "#880e4f", "#4a148c", "#311b92", "#1a237e", "#0d47a1",
-          "#01579b", "#006064", "#004d40", "#1b5e20", "#33691e", "#827717",
-          "#e65100", "#bf360c", "#3e2723", "#37474f", "#263238", "#212121"]
 
 colors2 = ["red darken-4", "purple darken-4", "pink darken-4", "deep-purple darken-4", "indigo darken-4",
            "blue darken-4", "light-blue darken-4", "cyan darken-4", "teal darken-4", "green darken-4",

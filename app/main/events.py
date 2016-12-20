@@ -1,8 +1,7 @@
-from flask import session, redirect, url_for
+from flask import session
 from flask_socketio import emit
 from ..database import Message, Room, User
 from app import socketio
-import json
 
 
 connection = Room('Chat', 'Room')
@@ -22,10 +21,7 @@ def handle_message(msg):
     string = '<li class="collection-item"><span {}>{}</span><p class="">{}</p></li>'
     full = string.format(new_color, msg['user'], msg['message'])
 
-    emit('chat_response', {'message': msg['message'],
-                           'user': msg['user'],
-                           'color': new_color,
-                           'string': full}, broadcast=True)
+    emit('chat_response', {'string': full}, broadcast=True)
 
 
 @socketio.on('message')
@@ -61,7 +57,6 @@ def handle_connect(msg):
         message_sending = {"message": msg,
                            "connections": user_count,
                            "users": users,
-                           'new_user': session['username'],
                            'user_color': user_color}
 
     emit("new connection", message_sending, broadcast=True)

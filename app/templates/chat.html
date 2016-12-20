@@ -21,11 +21,11 @@
 
            var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-           function update_list(conn){
+           function update_list(msg){
               $("#user_online").empty()
-             for(var i = 0; i < conn.users.length; i++ ) {
+             for(var i = 0; i < msg.users.length; i++ ) {
 
-                $("#user_online").append(conn.user_color[i]);
+                $("#user_online").append(msg.user_color[i]);
 
              };
            };
@@ -39,8 +39,7 @@
 
                if (n == -1) {
                    Materialize.toast(msg.message, 1200)
-
-               }
+                }
 
                 $("#stuff").text(msg.connections);
                 update_list(msg);
@@ -109,7 +108,7 @@
               </ul>
             </div>
               <div class="card-content" id="card"><span id="type_span" class="badge blue white-text"></span>
-                <span>Me: </span><span id="current_user">{{user}}</span>
+                <span>Me: @</span><span id="current_user">{{user}}</span>
 
                  <input placeholder="Send chat" type="text" id="mymessage">
 
