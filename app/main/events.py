@@ -37,7 +37,6 @@ def handle_connect(msg):
             color = Userdb.get_color(user)
             full = string.format(color, user)
             user_color.append(full)
-        print(user_color)
 
         msg = 'not'
         message_sending = {"message": msg,
@@ -45,16 +44,22 @@ def handle_connect(msg):
                            "users": users,
                            'user_color': user_color}
 
-
     else:
         connection.add_user(session['username'])
         users, user_count = connection.user_list()
 
+        user_color = []
+        for user in users:
+            string = '<tr><td class="{} white-text">{}</td></tr>'
+            color = Userdb.get_color(user)
+            full = string.format(color, user)
+            user_color.append(full)
 
         message_sending = {"message": msg,
                            "connections": user_count,
                            "users": users,
-                           'new_user': session['username']}
+                           'new_user': session['username'],
+                           'user_color': user_color}
 
     emit("new connection", message_sending, broadcast=True)
 
