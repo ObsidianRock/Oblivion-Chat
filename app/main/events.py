@@ -22,7 +22,7 @@ def handle_message(msg):
 
     emit('chat_response', {'message': msg['message'],
                            'user': msg['user'],
-                           'color': new_color}, broadcast=True)  # takes whatever message coming in and send to everyone connected
+                           'color': new_color}, broadcast=True)
 
 
 @socketio.on('message')
@@ -77,9 +77,17 @@ def handle_leave_room(obj):
 
     users, user_count = connection.user_list()
 
+    user_color = []
+    for user in users:
+        string = '<tr><td class="{} white-text">{}</td></tr>'
+        color = Userdb.get_color(user)
+        full = string.format(color, user)
+        user_color.append(full)
+
     message_sending = {'message': 'user {} left room'.format(user),
                        "connections": user_count,
-                       "users": users}
+                       "users": users,
+                       'user_color': user_color}
 
     emit('user_left', message_sending, broadcast=True)
 
