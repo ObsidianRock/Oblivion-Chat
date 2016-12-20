@@ -81,7 +81,6 @@ class User(UserMixin, DataBase):
     def get_color(self, user):
         obj = r.db(self.db).table(self.table).filter({'User': user}).run(self.conn)
         for o in obj:
-            print(o['color'])
             return o['color']
 
 class Room(DataBase):

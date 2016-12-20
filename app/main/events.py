@@ -1,11 +1,12 @@
 from flask import session, redirect, url_for
 from flask_socketio import emit
-from ..database import Message, Room
+from ..database import Message, Room, User
 from app import socketio
 
 
 connection = Room('Chat', 'Room')
 message = Message('Chat', 'Message')
+Userdb = User('Chat', 'User')
 
 
 
@@ -15,8 +16,14 @@ def handle_message(msg):
 
     message.commit(msg['message'], msg['user'])
 
+    color = Userdb.get_color(msg['user'])
+    color_split = color.split(' ')
+    new_color = 'class="title {}-text text-{}"'.format(color_split[0], color_split[1])
+    print(new_color)
+
     emit('chat_response', {'message': msg['message'],
-                           'user': msg['user']}, broadcast=True)  # takes whatever message coming in and send to everyone connected
+                           'user': msg['user'],
+                           'color': new_color}, broadcast=True)  # takes whatever message coming in and send to everyone connected
 
 
 @socketio.on('message')

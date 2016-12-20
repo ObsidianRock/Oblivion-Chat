@@ -42,7 +42,8 @@
             });
 
            socket.on('chat_response', function(msg){
-                $("#messages").append('<li class="collection-item">'+'<span class="title {{color}}">' + msg.user + '</span>' + '<p id=' + msg.user + '>' + msg.message + '</p>' +'</li>');
+
+                $("#messages").append('<li class="collection-item">' + '<span ' + msg.color + '>' + msg.user + '</span>' + '<p id=' + msg.user + '>' + msg.message + '</p>' +'</li>');
            });
 
 
@@ -75,16 +76,6 @@
                     socket.emit("leave_room", {} );
                     update_list(msg);
                  });
-
-
-         $("#mymessage").on('keydown', function (event) {
-
-             if (!(event.ctrlKey || event.metaKey || event.altKey)) {
-                socket.emit('typing', {"user":$("#current_user").text()})
-
-             };
-
-             });
 
 
         });
