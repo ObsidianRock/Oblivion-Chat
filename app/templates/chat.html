@@ -13,7 +13,9 @@
            function update_list(conn){
               $("#user_online").empty()
              for(var i = 0; i < conn.users.length; i++ ) {
-                $("#user_online").append("<tr><td>" + conn.users[i] + "</td></tr>");
+
+                $("#user_online").append(conn.user_color[i]);
+
              };
            };
 
@@ -42,7 +44,6 @@
             });
 
            socket.on('chat_response', function(msg){
-
                 $("#messages").append('<li class="collection-item">' + '<span ' + msg.color + '>' + msg.user + '</span>' + '<p id=' + msg.user + '>' + msg.message + '</p>' +'</li>');
            });
 
@@ -112,7 +113,7 @@
 
         <div class="col s3">
             <div class="card-panel">
-              <table>
+              <table class="bordered">
                 <thead>
                   <tr>
                       <th data-field="id">Users Online</th>

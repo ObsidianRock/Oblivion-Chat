@@ -2,13 +2,12 @@ from flask import session, redirect, url_for
 from flask_socketio import emit
 from ..database import Message, Room, User
 from app import socketio
+import json
 
 
 connection = Room('Chat', 'Room')
 message = Message('Chat', 'Message')
 Userdb = User('Chat', 'User')
-
-
 
 
 @socketio.on('chat_message')
@@ -32,14 +31,26 @@ def handle_connect(msg):
     users, user_count = connection.user_list()
 
     if session['username'] in users:
+        user_color = []
+        for user in users:
+            string ='<tr><td class="{} white-text">{}</td></tr>'
+            color = Userdb.get_color(user)
+            full = string.format(color, user)
+            user_color.append(full)
+        print(user_color)
+
         msg = 'not'
         message_sending = {"message": msg,
                            "connections": user_count,
-                           "users": users}
+                           "users": users,
+                           'user_color': user_color}
+
 
     else:
         connection.add_user(session['username'])
         users, user_count = connection.user_list()
+
+
         message_sending = {"message": msg,
                            "connections": user_count,
                            "users": users,

@@ -83,6 +83,7 @@ class User(UserMixin, DataBase):
         for o in obj:
             return o['color']
 
+
 class Room(DataBase):
 
     def __init__(self, db, table):
