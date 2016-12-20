@@ -17,12 +17,15 @@ def handle_message(msg):
 
     color = Userdb.get_color(msg['user'])
     color_split = color.split(' ')
-    new_color = 'class="title {}-text text-{}"'.format(color_split[0], color_split[1])
-    print(new_color)
+    new_color = 'class="title {}-text text-{} message_title"'.format(color_split[0], color_split[1])
+
+    string = '<li class="collection-item"><span {}>{}</span><p class="">{}</p></li>'
+    full = string.format(new_color, msg['user'], msg['message'])
 
     emit('chat_response', {'message': msg['message'],
                            'user': msg['user'],
-                           'color': new_color}, broadcast=True)
+                           'color': new_color,
+                           'string': full}, broadcast=True)
 
 
 @socketio.on('message')

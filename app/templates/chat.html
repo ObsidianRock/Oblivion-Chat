@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    <style>
+        .message_title {
+              font-size: 16px;
+              font-style: Black;
+              font-weight: bold;
+              text-decoration: underline;
+              }
+        .current_user {
+             color: transparent;
+        }
+    </style>
     {{ super() }}
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script type="text/javascript" charset="utf-8">
@@ -44,7 +55,7 @@
             });
 
            socket.on('chat_response', function(msg){
-                $("#messages").append('<li class="collection-item">' + '<span ' + msg.color + '>' + msg.user + '</span>' + '<p id=' + msg.user + '>' + msg.message + '</p>' +'</li>');
+                $("#messages").append(msg.string);
            });
 
 
@@ -98,7 +109,7 @@
               </ul>
             </div>
               <div class="card-content" id="card"><span id="type_span" class="badge blue white-text"></span>
-                <p id="current_user" >{{user}}</p>
+                <span>Me: </span><span id="current_user">{{user}}</span>
 
                  <input placeholder="Send chat" type="text" id="mymessage">
 
