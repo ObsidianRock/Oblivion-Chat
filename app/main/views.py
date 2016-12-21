@@ -4,11 +4,11 @@ from flask_login import login_user, login_required, logout_user
 from . import main
 from .form import LoginForm, RegisterForm
 
-from ..database import User, Room
+from ..database import User, Room, Message
 
 Userdb = User('Chat', 'User')
 room_users = Room('Chat', 'Room')
-
+messages = Message('Chat', 'Message')
 
 @main.route('/', methods=['GET', 'POST'])
 def main_page():
@@ -49,6 +49,8 @@ def register():
 @login_required
 def chat():
     user = session['username']
+    print(messages.get_last())
+
     return render_template('chat.html',
                            user=user)
 

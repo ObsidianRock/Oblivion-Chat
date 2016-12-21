@@ -3,6 +3,7 @@ import rethinkdb as r
 from . import login_manager, bcrypt
 from flask_login import UserMixin
 from random import randint
+from datetime import datetime
 
 
 colors2 = ["red darken-4", "purple darken-4", "pink darken-4", "deep-purple darken-4", "indigo darken-4",
@@ -38,10 +39,16 @@ class Message(DataBase):
 
     def commit(self, item, user):
         try:
-            r.db(self.db).table(self.table).insert({'message': item, 'user': user}).run(self.conn)
+            r.db(self.db).table(self.table).insert({'message': item, 'user': user,
+                                                    'time': r.now()}).run(self.conn)
         except Exception as e:
             print(str(e))
             print('couldnt insert items')
+
+    def get_last(self):
+        obj = r.db(self.db).table(self.table).order_by('time').run(self.conn)
+        return obj
+
 
 
 class User(UserMixin, DataBase):
