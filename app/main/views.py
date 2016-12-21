@@ -50,7 +50,9 @@ def register():
 @login_required
 def chat():
     user = session['username']
-
+    msg = messages.get_last()
+    for m in msg:
+        print(m['message'])
     return render_template('chat.html',
                            user=user)
 

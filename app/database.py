@@ -46,7 +46,16 @@ class Message(DataBase):
             print('couldnt insert items')
 
     def get_last(self):
-        pass
+        message_obj = r.db(self.db).table(self.table).order_by(r.desc('time')).limit(5).run(self.conn)
+        message_list = []
+        for message in message_obj:
+            obj = {}
+            obj['time'] = message['time']
+            obj['message'] = message['message']
+            obj['user'] = message['user']
+            message_list.append(obj)
+        return message_list
+
 
 
 
