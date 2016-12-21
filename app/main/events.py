@@ -2,30 +2,36 @@ from flask import session
 from flask_socketio import emit
 from ..database import Message, Room, User
 from app import socketio
-
+from datetime import datetime, time
 
 connection = Room('Chat', 'Room')
 message = Message('Chat', 'Message')
 Userdb = User('Chat', 'User')
 
 
-def make_response(msg):
+def make_response(msg, time):
 
     color = Userdb.get_color(msg['user'])
     color_split = color.split(' ')
     new_color = 'class="title {}-text text-{} message_title"'.format(color_split[0], color_split[1])
 
-    string = '<li class="collection-item"><span {}>{}</span><p class="">{}</p></li>'
-    full = string.format(new_color, msg['user'], msg['message'])
+    string_time = time.strftime('%H:%M:%S')
+
+    string = '<li class="collection-item"><span {}>{}</span><p>{}</p><p>{}</p></li>'
+
+    full = string.format(new_color, msg['user'], msg['message'], string_time)
 
     return full
+
 
 @socketio.on('chat_message')
 def handle_message(msg):
 
     message.commit(msg['message'], msg['user'])
 
-    full = make_response(msg)
+    time_now = datetime.now().time()
+
+    full = make_response(msg, time_now)
 
     emit('chat_response', {'string': full}, broadcast=True)
 
