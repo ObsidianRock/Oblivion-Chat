@@ -57,8 +57,6 @@ class Message(DataBase):
         return message_list
 
 
-
-
 class User(UserMixin, DataBase):
 
     def __init__(self, db, table):
