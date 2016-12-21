@@ -9,8 +9,9 @@ message = Message('Chat', 'Message')
 Userdb = User('Chat', 'User')
 
 
-def make_response(msg, time_now):
+def make_response(msg): # will make this more pretty later, now just a trial
 
+    time_now = datetime.now().time()
     color = Userdb.get_color(msg['user'])
     color_split = color.split(' ')
     new_color = 'class="title {}-text text-{} message_title"'.format(color_split[0], color_split[1])
@@ -22,12 +23,24 @@ def make_response(msg, time_now):
     return full
 
 
+def database_response(msg_list):  # will make this more pretty later, now just a trial
+
+    full_list = []
+    for msg in msg_list:
+        color = Userdb.get_color(msg['user'])
+        color_split = color.split(' ')
+        new_color = 'class="title {}-text text-{} message_title"'.format(color_split[0], color_split[1])
+        string = '<li class="collection-item"><span {}>{}</span><p>{}</p><p>{}</p></li>'
+        full = string.format(new_color, msg['user'], msg['message'], msg['time'])
+        full_list.append(full)
+    return full_list
+
+
 @socketio.on('chat_message')
 def handle_message(msg):
 
     message.commit(msg['message'], msg['user'])
-    time_now = datetime.now().time()
-    full = make_response(msg, time_now)
+    full = make_response(msg)
 
     emit('chat_response', {'string': full}, broadcast=True)
 
@@ -46,7 +59,9 @@ def handle_connect(msg):
             user_color.append(full)
 
         msg = 'not'
-        message_list = message.get_last()
+        message_from_db = message.get_last()
+
+        message_list = database_response(message_from_db)
 
         message_sending = {"message": msg,
                            "connections": user_count,
