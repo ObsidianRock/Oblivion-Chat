@@ -9,10 +9,7 @@ message = Message('Chat', 'Message')
 Userdb = User('Chat', 'User')
 
 
-@socketio.on('chat_message')
-def handle_message(msg):
-
-    message.commit(msg['message'], msg['user'])
+def make_response(msg):
 
     color = Userdb.get_color(msg['user'])
     color_split = color.split(' ')
@@ -20,6 +17,15 @@ def handle_message(msg):
 
     string = '<li class="collection-item"><span {}>{}</span><p class="">{}</p></li>'
     full = string.format(new_color, msg['user'], msg['message'])
+
+    return full
+
+@socketio.on('chat_message')
+def handle_message(msg):
+
+    message.commit(msg['message'], msg['user'])
+
+    full = make_response(msg)
 
     emit('chat_response', {'string': full}, broadcast=True)
 

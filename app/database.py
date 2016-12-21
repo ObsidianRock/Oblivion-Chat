@@ -46,8 +46,7 @@ class Message(DataBase):
             print('couldnt insert items')
 
     def get_last(self):
-        obj = r.db(self.db).table(self.table).order_by('time').run(self.conn)
-        return obj
+        pass
 
 
 

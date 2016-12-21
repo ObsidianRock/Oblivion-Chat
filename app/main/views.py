@@ -10,6 +10,7 @@ Userdb = User('Chat', 'User')
 room_users = Room('Chat', 'Room')
 messages = Message('Chat', 'Message')
 
+
 @main.route('/', methods=['GET', 'POST'])
 def main_page():
     form = LoginForm()
@@ -49,7 +50,6 @@ def register():
 @login_required
 def chat():
     user = session['username']
-    print(messages.get_last())
 
     return render_template('chat.html',
                            user=user)
