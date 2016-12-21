@@ -30,6 +30,15 @@
              };
            };
 
+           function update_message_list(msg) {
+
+              for(var i = 0; i < msg.length; i++) {
+
+                 $("#messages").append(msg[i])
+              };
+
+           };
+
            socket.on('connect', function() {
                 socket.send('i am connected');
            });
@@ -43,7 +52,7 @@
 
                 $("#stuff").text(msg.connections);
                 update_list(msg);
-
+                update_message_list(msg.message_list)
 
             });
 

@@ -63,11 +63,13 @@ def handle_connect(msg):
 
         message_list = database_response(message_from_db)
 
+        message_reversed = message_list[::-1]
+
         message_sending = {"message": msg,
                            "connections": user_count,
                            "users": users,
                            'user_color': user_color,
-                           'message_list': message_list}
+                           'message_list': message_reversed}
 
     else:
         connection.add_user(session['username'])
