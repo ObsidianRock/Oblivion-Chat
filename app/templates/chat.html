@@ -88,6 +88,13 @@
            });
 
 
+        $('#mymessage').keypress(function(e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+            socket.emit("chat_message", {"message":$("#mymessage").val(), "user":$("#current_user").text()});
+                $("#mymessage").val('')
+            });
+
          $("#closebutton").on('click', function(){
                 socket.emit("leave_room", {} );
                 update_list(msg);

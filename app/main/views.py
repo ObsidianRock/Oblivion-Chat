@@ -22,7 +22,7 @@ def main_page():
             login_user(user)
             session['username'] = form.username.data
             flash('logged in', 'green accent-3')
-            return redirect(url_for('main.chat'))
+            return redirect(url_for('main.dashboard'))
     return render_template('main.html',
                            form=form)
 
@@ -50,9 +50,6 @@ def register():
 @login_required
 def chat():
     user = session['username']
-    msg = messages.get_last()
-    for m in msg:
-        print(m['message'])
     return render_template('chat.html',
                            user=user)
 
