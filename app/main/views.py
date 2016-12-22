@@ -1,3 +1,5 @@
+import sys
+
 from flask import render_template, redirect, url_for, flash, session
 from flask_login import login_user, login_required, logout_user
 
@@ -6,9 +8,30 @@ from .form import LoginForm, RegisterForm
 
 from ..database import User, Room, Message
 
+from baseconv import BaseConverter
+from random import SystemRandom
+
 Userdb = User('Chat', 'User')
 room_users = Room('Chat', 'Room')
 messages = Message('Chat', 'Message')
+
+
+characters = 'abcdefghkmnpqrstwxyz'
+digits = '23456789'
+base = characters + characters.upper() + digits
+number_converter = BaseConverter(base)
+
+
+def id_generator():
+    return SystemRandom().randint(1, sys.maxsize)
+
+
+def gen_short_id(long_id):
+    return number_converter.encode(long_id)
+
+
+def get_long_id(short_id):
+    return number_converter.decode(short_id)
 
 
 @main.route('/', methods=['GET', 'POST'])
