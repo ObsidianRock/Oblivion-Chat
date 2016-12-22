@@ -36,7 +36,7 @@ def database_response(msg_list):  # will make this more pretty later, now just a
     return full_list
 
 
-@socketio.on('chat_message')
+@socketio.on('chat_message', namespace='/chat')
 def handle_message(msg):
 
     message.commit(msg['message'], msg['user'])
@@ -45,7 +45,7 @@ def handle_message(msg):
     emit('chat_response', {'string': full}, broadcast=True)
 
 
-@socketio.on('message')
+@socketio.on('message', namespace='/chat')
 def handle_connect(msg):
 
     users, user_count = connection.user_list()
@@ -96,7 +96,7 @@ def handle_connect(msg):
     emit("new connection", message_sending, broadcast=True)
 
 
-@socketio.on('leave_room')
+@socketio.on('leave_room', namespace='/chat')
 def handle_leave_room(obj):
 
     user = session['username']
@@ -124,7 +124,7 @@ def handle_leave_room(obj):
     emit('user_left', message_sending, broadcast=True)
 
 
-@socketio.on('typing')
+@socketio.on('typing', namespace='/chat')
 def handle_tying(obj):
 
     message_sending = {"message": "{} is typing".format(obj['user'])}
