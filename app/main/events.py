@@ -84,7 +84,7 @@ def handle_connect(msg):
             full = string.format(color, user)
             user_color.append(full)
 
-        refreshed = {}
+        refreshed = {'message_list': []}
 
         message_sending = {"message": msg,
                            "connections": user_count,
