@@ -77,8 +77,11 @@ def chat():
                            user=user)
 
 
-@main.route('/Dashboard')
+@main.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    user = session['username']
+
+    return render_template('dashboard.html',
+                           user=user)
 

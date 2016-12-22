@@ -94,6 +94,7 @@ class User(UserMixin, DataBase):
             return o['color']
 
 
+
 class Room(DataBase):
 
     def __init__(self, db, table):
@@ -119,6 +120,16 @@ class Room(DataBase):
         feed = r.db(self.db).table(self.table).changes().run(self.conn)
         for changes in feed:
             yield changes
+
+
+class RoomUser(DataBase):
+    def __init__(self, db, table):
+        super().__init__(db)
+        self.table = table
+
+    def register(self, user, room):
+        pass
+
 
 
 @login_manager.user_loader
