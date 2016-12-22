@@ -65,11 +65,13 @@ def handle_connect(msg):
 
         message_reversed = message_list[::-1]
 
+        refreshed = {'message_list': message_reversed}
+
         message_sending = {"message": msg,
                            "connections": user_count,
                            "users": users,
-                           'user_color': user_color,
-                           'message_list': message_reversed}
+                           'user_color': user_color
+                           }
 
     else:
         connection.add_user(session['username'])
@@ -82,14 +84,15 @@ def handle_connect(msg):
             full = string.format(color, user)
             user_color.append(full)
 
-        message_list = message.get_last()
+        refreshed = {}
 
         message_sending = {"message": msg,
                            "connections": user_count,
                            "users": users,
-                           'user_color': user_color,
-                           'message_list': message_list}
+                           'user_color': user_color
+                           }
 
+    emit('refresh', refreshed)
     emit("new connection", message_sending, broadcast=True)
 
 
