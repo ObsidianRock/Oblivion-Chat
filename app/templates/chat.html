@@ -99,18 +99,19 @@
          $("#closebutton").on('click', function(){
                 socket.emit("leave_room", {} );
                 update_list(msg);
-                
+                socket.disconnect();
              });
 
         $("#logout").on('click', function(){
             socket.emit("leave_room", {} );
             update_list(msg);
-
+            socket.disconnect();
          });
 
          $("#logout_2").on('click', function(){
                     socket.emit("leave_room", {} );
                     update_list(msg);
+                    socket.disconnect();
                  });
 
 
