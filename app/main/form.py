@@ -14,3 +14,10 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), EqualTo('password_2')])
     password_2 = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class NewRoomForm(FlaskForm):
+
+    room_name = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+

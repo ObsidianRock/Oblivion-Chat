@@ -8,17 +8,39 @@
         <div class="col s12">
           <div class="card ">
             <div class="card-content black-text">
-              <span class="card-title">{{user}}</span>
-
-
+              <span class="card-title"> Username: {{user}}</span>
             </div>
-            <div class="card-action">
-              <a class="btn" href="#">Create room</a>
-              <a class="btn" href="#">Join room</a>
-              <a class="btn" href="#">Setting</a>
-            </div>
+
+               <div class="row">
+                <div class="col s12">
+                  <ul class="tabs">
+                    <li class="tab col s6"><a href="#create">Create Room</a></li>
+                    <li class="tab col s6"><a href="#setting">Setting</a></li>
+                  </ul>
+                </div>
+                <div id="create" class="col s12">
+                  <form class="col s12" action={{url_for('main.register')}} method="POST">
+                    {{ new_room_form.csrf_token }}
+
+                    <div class="row">
+                        <div class="input-field col s12 black-text">
+                            {{new_room_form.room_name}}{{new_room_form.room_name.label(class="black-text")}}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        {{new_room_form.submit(class="btn-large red darken-4")}}
+                    </div>
+                </form>
+
+                </div>
+                <div id="setting" class="col s12">Test 4</div>
+              </div>
           </div>
         </div>
       </div>
+
+
+
 
 {% endblock %}

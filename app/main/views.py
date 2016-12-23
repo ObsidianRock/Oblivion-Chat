@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, flash, session
 from flask_login import login_user, login_required, logout_user
 
 from . import main
-from .form import LoginForm, RegisterForm
+from .form import LoginForm, RegisterForm, NewRoomForm
 
 from ..database import User, Room, Message
 
@@ -49,7 +49,6 @@ def main_page():
     return render_template('main.html',
                            form=form)
 
-
 @main.route('/logout', methods=['GET'])
 @login_required
 def logout():
@@ -81,7 +80,8 @@ def chat():
 @login_required
 def dashboard():
     user = session['username']
-
+    new_room_form = NewRoomForm()
     return render_template('dashboard.html',
-                           user=user)
+                           user=user,
+                           new_room_form=new_room_form)
 
