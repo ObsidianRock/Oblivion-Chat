@@ -136,8 +136,14 @@ class RoomUser(DataBase):
         return obj
 
     def get_user_rooms(self, user):
-        obj = r.db(self.db).table(self.table).filter({'Room_user': user}).run(self.conn)
-        return obj
+        cursor_object = r.db(self.db).table(self.table).filter({'Room_user': user}).run(self.conn)
+        room_list = []
+        for userx in cursor_object:
+            dic_list = {}
+            dic_list['id'] = userx['id']
+            dic_list['name'] = userx['Room_name']
+            room_list.append(dic_list)
+        return room_list
 
 
 @login_manager.user_loader

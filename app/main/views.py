@@ -86,11 +86,10 @@ def dashboard():
         room_register.register(user, new_room_form.room_name.data)
         return redirect(url_for('main.dashboard'))
 
-    obj = room_register.get_user_rooms(user)
-    for userx in obj:
-        print(userx['Room_name'])
-
+    room_list = room_register.get_user_rooms(user)
+    print(room_list)
     return render_template('dashboard.html',
                            user=user,
-                           new_room_form=new_room_form)
+                           new_room_form=new_room_form,
+                           room_list=room_list)
 
