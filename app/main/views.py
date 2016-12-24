@@ -6,7 +6,7 @@ from flask_login import login_user, login_required, logout_user
 from . import main
 from .form import LoginForm, RegisterForm, NewRoomForm
 
-from ..database import User, Room, Message
+from ..database import User, Room, Message, RoomUser
 
 from baseconv import BaseConverter
 from random import SystemRandom
@@ -14,7 +14,7 @@ from random import SystemRandom
 Userdb = User('Chat', 'User')
 room_users = Room('Chat', 'Room')
 messages = Message('Chat', 'Message')
-
+room_register = RoomUser('Chat', 'Register')
 
 characters = 'abcdefghkmnpqrstwxyz'
 digits = '23456789'
@@ -49,6 +49,7 @@ def main_page():
     return render_template('main.html',
                            form=form)
 
+
 @main.route('/logout', methods=['GET'])
 @login_required
 def logout():
@@ -76,11 +77,19 @@ def chat():
                            user=user)
 
 
-@main.route('/dashboard')
+@main.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
     user = session['username']
     new_room_form = NewRoomForm()
+    if new_room_form.validate_on_submit():
+        room_register.register(user, new_room_form.room_name.data)
+        return redirect(url_for('main.dashboard'))
+
+    obj = room_register.get_user_rooms(user)
+    for userx in obj:
+        print(userx['Room_name'])
+
     return render_template('dashboard.html',
                            user=user,
                            new_room_form=new_room_form)

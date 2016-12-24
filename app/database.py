@@ -94,7 +94,6 @@ class User(UserMixin, DataBase):
             return o['color']
 
 
-
 class Room(DataBase):
 
     def __init__(self, db, table):
@@ -128,8 +127,17 @@ class RoomUser(DataBase):
         self.table = table
 
     def register(self, user, room):
-        pass
 
+        r.db(self.db).table(self.table).insert({'Room_name': room,
+                                                'Room_user': user}).run(self.conn)
+
+    def get_room_users(self, room):
+        obj = r.db(self.db).table(self.table).filter({'Room_name': room}).run(self.conn)
+        return obj
+
+    def get_user_rooms(self, user):
+        obj = r.db(self.db).table(self.table).filter({'Room_user': user}).run(self.conn)
+        return obj
 
 
 @login_manager.user_loader
