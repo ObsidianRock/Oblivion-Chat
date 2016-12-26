@@ -14,16 +14,14 @@
                <div class="row">
                 <div class="col s12">
                   <ul class="tabs">
-                    <li class="tab col s4"><a class="active" href="#main">Main</a></li>
-                    <li class="tab col s4"><a href="#create">Create Room</a></li>
-                    <li class="tab col s4"><a href="#setting">Setting</a></li>
+                    <li class="tab col s6"><a href="#create">Create Room</a></li>
+                    <li class="tab col s6"><a href="#setting">Setting</a></li>
                   </ul>
                 </div>
 
-                <div id="main" class="col s4">
-                </div>
 
-                <div id="create" class="col s4">
+
+                <div id="create" class="col s6">
                   <form class="col s12" action={{url_for('main.dashboard')}} method="POST">
                         {{ new_room_form.csrf_token }}
 
@@ -39,7 +37,7 @@
                     </form>
                 </div>
 
-                <div id="setting" class="col s4">
+                <div id="setting" class="col s6">
                     Test 4
                 </div>
 
