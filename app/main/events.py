@@ -40,9 +40,7 @@ def database_response(msg_list):  # will make this more pretty later, now just a
 def handle_message(msg):
 
     room = session.get('room')
-
     message.commit(msg['message'], msg['user'], room)
-
     full = make_response(msg)
 
     emit('chat_response', {'string': full}, room=room)
@@ -51,8 +49,8 @@ def handle_message(msg):
 @socketio.on('message', namespace='/chat')
 def handle_connect(msg):
 
-    users, user_count = connection.user_list()
     room = session.get('room')
+    users, user_count = connection.user_list(room)
 
     if session['username'] in users:
         user_color = []
@@ -78,8 +76,8 @@ def handle_connect(msg):
                            }
 
     else:
-        connection.add_user(session['username'])
-        users, user_count = connection.user_list()
+        connection.add_user(session['username'], room)
+        users, user_count = connection.user_list(room)
 
         user_color = []
         for user in users:
