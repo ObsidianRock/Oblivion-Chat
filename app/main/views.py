@@ -53,6 +53,7 @@ def register():
 @login_required
 def chat(r_id):
     room_id = r_id
+    session['room'] = room_id
     user = session['username']
     return render_template('chat.html',
                            user=user,

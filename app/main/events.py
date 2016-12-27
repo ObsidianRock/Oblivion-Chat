@@ -1,5 +1,5 @@
 from flask import session
-from flask_socketio import emit
+from flask_socketio import emit, join_room, leave_room
 from ..database import Message, Room, User
 from app import socketio
 from datetime import datetime, time
@@ -42,7 +42,9 @@ def handle_message(msg):
     message.commit(msg['message'], msg['user'])
     full = make_response(msg)
 
-    emit('chat_response', {'string': full}, broadcast=True)
+    room = session.get('room')
+
+    emit('chat_response', {'string': full}, room=room)
 
 
 @socketio.on('message', namespace='/chat')
@@ -92,8 +94,11 @@ def handle_connect(msg):
                            'user_color': user_color
                            }
 
+    room = session.get('room')
+    join_room(room)
+
     emit('refresh', refreshed)
-    emit("new connection", message_sending, broadcast=True)
+    emit("new connection", message_sending, room=room)
 
 
 @socketio.on('leave_room', namespace='/chat')
