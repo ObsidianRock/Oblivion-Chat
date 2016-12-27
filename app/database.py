@@ -140,11 +140,6 @@ class Room(DataBase):
         user_count = len(user_list)
         return user_list, user_count
 
-    def feed(self):
-        feed = r.db(self.db).table(self.table).changes().run(self.conn)
-        for changes in feed:
-            yield changes
-
 
 class RoomUser(DataBase):
     def __init__(self, db, table):
