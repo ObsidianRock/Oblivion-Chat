@@ -1,13 +1,12 @@
 import sys
 
 import rethinkdb as r
-from . import login_manager, bcrypt
-from flask_login import UserMixin
-from random import randint
-from datetime import datetime
 
+from . import login_manager, bcrypt
 from baseconv import BaseConverter
-from random import SystemRandom
+from flask_login import UserMixin
+from random import randint, SystemRandom
+
 
 colors2 = ["red darken-4", "purple darken-4", "pink darken-4", "deep-purple darken-4", "indigo darken-4",
            "blue darken-4", "light-blue darken-4", "cyan darken-4", "teal darken-4", "green darken-4",
@@ -66,7 +65,7 @@ class Message(DataBase):
                                                     'time': r.now()}).run(self.conn)
         except Exception as e:
             print(str(e))
-            print('couldnt insert items')
+            print('couldn\'t insert items')
 
     def get_last(self, room):
         message_obj = r.db(self.db).table(self.table).filter({'room': room}).order_by(r.desc('time')).limit(5).run(self.conn)

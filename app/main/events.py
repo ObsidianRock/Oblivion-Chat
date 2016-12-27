@@ -1,8 +1,9 @@
-from flask import session
-from flask_socketio import emit, join_room, leave_room
 from ..database import Message, Room, User
 from app import socketio
 from datetime import datetime, time
+
+from flask import session
+from flask_socketio import emit, join_room, leave_room
 
 connection = Room('Chat', 'Room')
 message = Message('Chat', 'Message')
@@ -62,13 +63,10 @@ def handle_connect(msg):
 
         msg = 'not'
         message_from_db = message.get_last(room)
-
         message_list = database_response(message_from_db)
-
         message_reversed = message_list[::-1]
 
         refreshed = {'message_list': message_reversed}
-
         message_sending = {"message": msg,
                            "connections": user_count,
                            "users": users,
@@ -126,7 +124,8 @@ def handle_leave_room(obj):
                        "users": users,
                        'user_color': user_color}
 
-    emit('user_left', message_sending, broadcast=True)
+    leave_room(room)
+    emit('user_left', message_sending, room=room)
 
 
 @socketio.on('typing', namespace='/chat')
