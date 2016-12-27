@@ -65,6 +65,7 @@ def delete_room(r_id):
     room_register.delete_room(r_id)
     return redirect(url_for('main.dashboard'))
 
+
 @main.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():

@@ -112,7 +112,14 @@
                     socket.emit("leave_room", {} );
                     update_list(msg);
                     socket.disconnect();
-                 });
+            });
+
+        $("#dashboard ").on('click', function(){
+                socket.emit("leave_room", {} );
+                update_list(msg);
+                socket.disconnect();
+            });
+
         });
 
     </script>

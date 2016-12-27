@@ -140,8 +140,6 @@ class Room(DataBase):
         return user_list, user_count
 
 
-
-
 class RoomUser(DataBase):
     def __init__(self, db, table):
         super().__init__(db)
@@ -169,6 +167,8 @@ class RoomUser(DataBase):
 
     def delete_room(self, room):
         r.db(self.db).table(self.table).filter({'id': room}).delete().run(self.conn)
+
+
 
 
 
