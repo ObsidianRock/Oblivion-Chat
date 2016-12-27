@@ -58,16 +58,18 @@ class Message(DataBase):
         super().__init__(db)
         self.table = table
 
-    def commit(self, item, user):
+    def commit(self, item, user, room):
         try:
-            r.db(self.db).table(self.table).insert({'message': item, 'user': user,
+            r.db(self.db).table(self.table).insert({'room': room,
+                                                    'message': item,
+                                                    'user': user,
                                                     'time': r.now()}).run(self.conn)
         except Exception as e:
             print(str(e))
             print('couldnt insert items')
 
-    def get_last(self):
-        message_obj = r.db(self.db).table(self.table).order_by(r.desc('time')).limit(5).run(self.conn)
+    def get_last(self, room):
+        message_obj = r.db(self.db).table(self.table).filter({'room': room}).order_by(r.desc('time')).limit(5).run(self.conn)
         message_list = []
         for message in message_obj:
             obj = {}
