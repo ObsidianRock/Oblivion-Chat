@@ -140,6 +140,8 @@ class Room(DataBase):
         return user_list, user_count
 
 
+
+
 class RoomUser(DataBase):
     def __init__(self, db, table):
         super().__init__(db)
@@ -164,6 +166,10 @@ class RoomUser(DataBase):
             dic_list['name'] = userx['Room_name']
             room_list.append(dic_list)
         return room_list
+
+    def delete_room(self, room):
+        r.db(self.db).table(self.table).filter({'id': room}).delete().run(self.conn)
+
 
 
 @login_manager.user_loader

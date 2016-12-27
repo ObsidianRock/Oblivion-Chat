@@ -59,6 +59,12 @@ def chat(r_id):
                            room_id=room_id)
 
 
+@main.route('/chat/delete/<r_id>')
+@login_required
+def delete_room(r_id):
+    room_register.delete_room(r_id)
+    return redirect(url_for('main.dashboard'))
+
 @main.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
