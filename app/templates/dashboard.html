@@ -3,7 +3,6 @@
 
 {% block page_content %}
 
-
       <div class="row">
         <div class="col s12">
           <div class="card ">
@@ -66,6 +65,8 @@
                   <tr>
                       <th data-field="id">Room Name</th>
                       <th data-field="name"></th>
+                      <th data-field="name"></th>
+
                   </tr>
                 </thead>
                  <tbody>
@@ -73,6 +74,8 @@
                   <tr>
                     <td>{{user['name'] }}</td>
                     <td><a href="chat/{{user['id']}}" class="btn">Enter Room</a></td>
+                    <td><button class="btn grey darken-4" id="copy-button" data-clipboard-text="http://localhost:5000/chat/{{user['id']}}">
+                    Copy Link </button> </td>
                     <td><a href="chat/delete/{{user['id']}}" class="btn red darken-4">Delete Room</a></td>
                   </tr>
                  {% endfor %}
@@ -87,9 +90,6 @@
           </div>
         </div>
       </div>
-
-
-
 
 
 {% endblock %}
