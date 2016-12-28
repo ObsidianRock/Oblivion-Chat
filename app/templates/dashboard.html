@@ -22,19 +22,26 @@
 
 
                 <div id="create" class="col s6">
-                  <form class="col s12" action={{url_for('main.dashboard')}} method="POST">
-                        {{ new_room_form.csrf_token }}
+                    <div class="container">
+                        <form class="col s12" action={{url_for('main.dashboard')}} method="POST">
+                            {{ new_room_form.csrf_token }}
 
-                        <div class="row">
-                            <div class="input-field col s12 black-text">
-                                {{new_room_form.room_name}}{{new_room_form.room_name.label(class="black-text")}}
+                            <div class="row">
+                                <div class="input-field col s12 black-text">
+                                    {{new_room_form.room_name}}
+
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            {{new_room_form.submit(class="btn-large red darken-4")}}
-                        </div>
-                    </form>
+                            <div class="row">
+                                <div class="input-field col s12 black-text">
+                                    {{new_room_form.submit(class="btn-large red darken-4")}}
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
                 </div>
 
                 <div id="setting" class="col s6">

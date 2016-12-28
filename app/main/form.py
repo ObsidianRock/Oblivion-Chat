@@ -18,6 +18,6 @@ class RegisterForm(FlaskForm):
 
 class NewRoomForm(FlaskForm):
 
-    room_name = StringField('Room Name', validators=[DataRequired()])
+    room_name = StringField('Room Name', validators=[DataRequired()], render_kw={"placeholder": "Room Name"})
     submit = SubmitField('Submit')
 
