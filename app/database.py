@@ -174,6 +174,8 @@ class RoomUser(DataBase):
         return obj
 
 
+class RoomSaved(DataBase):
+    pass
 
 
 @login_manager.user_loader

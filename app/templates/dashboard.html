@@ -14,52 +14,52 @@
                   <ul class="tabs">
                     <li class="tab col s6"><a href="#create">Create Room</a></li>
                     <li class="tab col s6"><a href="#save">Save Room</a></li>
-
                   </ul>
                 </div>
 
                 <div id="create" class="col s6">
                     <div class="container">
-                        <form id="newRoomForm" class="col s12" action={{url_for('main.newroom')}} method="POST">
+                       <div class="col s12">
+                        <form id="newRoomForm" action={{url_for('main.newroom')}} method="POST">
                             {{ new_room_form.csrf_token }}
 
                             <div class="row">
-                                <div class="input-field col s12 black-text">
+                                <div class="input-field black-text">
                                     {{new_room_form.room_name}}
 
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="input-field col s12 black-text">
+                                <div class="input-field black-text">
                                     {{new_room_form.submit(class="btn red darken-4")}}
                                 </div>
                             </div>
-
                         </form>
+                      </div>
                     </div>
 
                 </div>
                 <div id="save" class="col s6">
-
                     <div class="container">
-                        <form id="saveRoomForm" class="col s12" action={{url_for('main.saveroom')}} method="POST">
+                       <div class="col s12">
+                        <form id="saveRoomForm" action={{url_for('main.saveroom')}} method="POST">
                             {{ save_room_save.csrf_token }}
 
                             <div class="row">
-                                <div class="input-field col s12 black-text">
-                                    {{save_room_save.room_name}}
-
+                                <div class="input-field black-text">
+                                    {{save_room_save.save_name}}
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="input-field col s12 black-text">
+                                <div class="input-field black-text">
                                     {{save_room_save.submit(class="btn blue-grey darken-3")}}
                                 </div>
                             </div>
-
                         </form>
+                       </div>
+
                     </div>
                 </div>
 

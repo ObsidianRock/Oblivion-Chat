@@ -1,17 +1,17 @@
-import json
-from flask import render_template, redirect, url_for, flash, session, jsonify, request
+from flask import render_template, redirect, url_for, flash, session, request
 from flask_login import login_user, login_required, logout_user
 
 from . import main
 from .form import LoginForm, RegisterForm, NewRoomForm, SaveRoomForm
 
-from ..database import User, Room, Message, RoomUser
+from ..database import User, Room, Message, RoomUser, RoomSaved
 
 
 Userdb = User('Chat', 'User')
 room_users = Room('Chat', 'Room')
 messages = Message('Chat', 'Message')
 room_register = RoomUser('Chat', 'Register')
+room_saved = RoomSaved('Chat', 'Saved') #
 
 
 @main.route('/', methods=['GET', 'POST'])
@@ -72,16 +72,18 @@ def delete_room(r_id):
 def dashboard():
     user = session['username']
     new_room_form = NewRoomForm()
-    save_room_save = SaveRoomForm()
+    save_room_form = SaveRoomForm()
     if new_room_form.validate_on_submit():
         room_register.register(user, new_room_form.room_name.data)
         return redirect(url_for('main.dashboard'))
 
     room_list = room_register.get_user_rooms(user)
+    saved_room_list = room_saved.get_rooms(user) #
     return render_template('dashboard.html',
                            user=user,
                            new_room_form=new_room_form,
-                           save_room_save=save_room_save,
+                           save_room_form=save_room_form,
+                           saved_room_list=saved_room_list,
                            room_list=room_list)
 
 
@@ -103,7 +105,7 @@ def newroom():
 
         template = render_template('_micro.html', id=new_room['id'], name=new_room['name'])
 
-    return template
+        return template
 
 
 @main.route('/saveroom', methods=['POST'])
