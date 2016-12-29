@@ -152,6 +152,22 @@
             });
         });
 
+        $('#saveRoomForm').on('submit', function(e) {
+            e.preventDefault();
+            console.log('prevented')
+            $.ajax({
+                type:'POST',
+                url: '/saveRoom',
+                data: {
+                      room_id: $('#room_id').val()
+                }
+            }).done(function(data){
+
+             $('#saverRoomTable').append(data);
+             $('#room_id').val('');
+            });
+        });
+
     </script>
 
 {% endblock %}

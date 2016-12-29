@@ -109,7 +109,7 @@ def newroom():
         return template
 
 
-@main.route('/saveroom', methods=['POST'])
+@main.route('/saveRoom', methods=['POST'])
 def saveroom():
 
     user = session['username']

@@ -178,8 +178,8 @@ class RoomUser(DataBase):
 
         room_detail = {}
         for item in obj:
-            room_detail['admin'] = item['user']
-            room_detail['name'] = item['name']
+            room_detail['admin'] = item['Room_user']
+            room_detail['name'] = item['Room_name']
         return room_detail
 
 
@@ -196,7 +196,7 @@ class RoomSaved(DataBase):
                                                 'user': user}).run(self.conn)
 
     def get_saved_room(self, user):
-        cursor_object = r.db(self.db).table(self.table).filter({'Room_user': user}).run(self.conn)
+        cursor_object = r.db(self.db).table(self.table).filter({'user': user}).run(self.conn)
         room_list = []
         for userx in cursor_object:
             dic_list = {}
