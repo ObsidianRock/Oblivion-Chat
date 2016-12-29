@@ -1,4 +1,5 @@
-from flask import render_template, redirect, url_for, flash, session
+import json
+from flask import render_template, redirect, url_for, flash, session, jsonify, request
 from flask_login import login_user, login_required, logout_user
 
 from . import main
@@ -80,4 +81,25 @@ def dashboard():
                            user=user,
                            new_room_form=new_room_form,
                            room_list=room_list)
+
+
+@main.route('/newRoom', methods=['POST'])
+def newroom():
+
+    user = session['username']
+    name = request.form['room_name']
+
+    if user and name:
+
+        room_register.register(user, name)
+
+        obj = room_register.get_room(name, user)
+        new_room = {}
+        for item in obj:
+            new_room['id'] = item['id']
+            new_room['name'] = item['Room_name']
+
+        template = render_template('_micro.html', id=new_room['id'], name=new_room['name'])
+
+    return template
 

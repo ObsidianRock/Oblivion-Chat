@@ -168,6 +168,10 @@ class RoomUser(DataBase):
     def delete_room(self, room):
         r.db(self.db).table(self.table).filter({'id': room}).delete().run(self.conn)
 
+    def get_room(self, room, user):
+        obj = r.db(self.db).table(self.table).filter({'Room_name': room,
+                                                      'Room_user': user}).run(self.conn)
+        return obj
 
 
 

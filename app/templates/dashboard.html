@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
+{% block head %}
+    {{ super() }}
 
+{% endblock %}
 
 {% block page_content %}
 
@@ -14,7 +17,6 @@
                 <div class="col s12">
                   <ul class="tabs">
                     <li class="tab col s6"><a href="#create">Create Room</a></li>
-                    <li class="tab col s6"><a href="#setting">Setting</a></li>
                   </ul>
                 </div>
 
@@ -22,7 +24,7 @@
 
                 <div id="create" class="col s6">
                     <div class="container">
-                        <form class="col s12" action={{url_for('main.dashboard')}} method="POST">
+                        <form id="newRoomForm" class="col s12" action={{url_for('main.newroom')}} method="POST">
                             {{ new_room_form.csrf_token }}
 
                             <div class="row">
@@ -43,9 +45,6 @@
 
                 </div>
 
-                <div id="setting" class="col s6">
-                    Test 4
-                </div>
 
                 </div>
           </div>
@@ -69,12 +68,12 @@
 
                   </tr>
                 </thead>
-                 <tbody>
+                 <tbody id="roomTable">
                  {% for user in room_list %}
                   <tr>
                     <td>{{user['name'] }}</td>
                     <td><a href="chat/{{user['id']}}" class="btn">Enter Room</a></td>
-                    <td><button class="btn grey darken-4" id="copy-button" data-clipboard-text="http://localhost:5000/chat/{{user['id']}}">
+                    <td><button class="btn blue-grey darken-3" id="copy-button" data-clipboard-text="http://localhost:5000/chat/{{user['id']}}">
                     Copy Link </button> </td>
                     <td><a href="chat/delete/{{user['id']}}" class="btn red darken-4">Delete Room</a></td>
                   </tr>
@@ -91,5 +90,22 @@
         </div>
       </div>
 
+        <script type="text/javascript" charset="utf-8">
+            $('#newRoomForm').on('submit', function(e) {
+                e.preventDefault();
+                console.log('prevented')
+                $.ajax({
+                    type:'POST',
+                    url: '/newRoom',
+                    data: {
+                          room_name: $('#room_name').val()
+                    }
+                }).done(function(data){
+
+                 $('#roomTable').append(data);
+                });
+            });
+
+        </script>
 
 {% endblock %}
