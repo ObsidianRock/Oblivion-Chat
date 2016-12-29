@@ -173,6 +173,15 @@ class RoomUser(DataBase):
                                                       'Room_user': user}).run(self.conn)
         return obj
 
+    def get_by_id(self, room_id):
+        obj = r.db(self.db).table(self.table).filter({'id': room_id}).run(self.conn)
+
+        room_detail = {}
+        for item in obj:
+            room_detail['admin'] = item['user']
+            room_detail['name'] = item['name']
+        return room_detail
+
 
 class RoomSaved(DataBase):
 
@@ -193,7 +202,6 @@ class RoomSaved(DataBase):
             dic_list = {}
             dic_list['id'] = userx['id']
             dic_list['name'] = userx['Room_name']
-            dic_list['admin'] = userx['admin']
             room_list.append(dic_list)
         return room_list
 

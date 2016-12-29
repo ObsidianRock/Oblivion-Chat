@@ -24,5 +24,5 @@ class NewRoomForm(FlaskForm):
 
 class SaveRoomForm(FlaskForm):
 
-    save_name = StringField('Room Name', validators=[DataRequired()], render_kw={"placeholder": "Room Name"})
+    room_id = StringField('Room id', validators=[DataRequired()], render_kw={"placeholder": "Room id"})
     submit = SubmitField('Save Room')

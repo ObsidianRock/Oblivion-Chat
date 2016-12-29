@@ -44,17 +44,17 @@
                     <div class="container">
                        <div class="col s12">
                         <form id="saveRoomForm" action={{url_for('main.saveroom')}} method="POST">
-                            {{ save_room_save.csrf_token }}
+                            {{ save_room_form.csrf_token }}
 
                             <div class="row">
                                 <div class="input-field black-text">
-                                    {{save_room_save.save_name}}
+                                    {{save_room_form.room_id}}
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="input-field black-text">
-                                    {{save_room_save.submit(class="btn blue-grey darken-3")}}
+                                    {{save_room_form.submit(class="btn blue-grey darken-3")}}
                                 </div>
                             </div>
                         </form>
@@ -118,7 +118,15 @@
                   </tr>
                 </thead>
                  <tbody id="saverRoomTable">
-
+                 {% for user in saved_room_list %}
+                  <tr>
+                    <td>{{user['name'] }}</td>
+                    <td><a href="chat/{{user['id']}}" class="btn">Enter Room</a></td>
+                    <td><button class="btn blue-grey darken-3" id="copy-button" data-clipboard-text="http://localhost:5000/chat/{{user['id']}}">
+                    Copy Link </button> </td>
+                    <td><a href="chat/delete/{{user['id']}}" class="btn red darken-4">Delete Room</a></td>
+                  </tr>
+                 {% endfor %}
                  </tbody>
                 </table>
             </div>

@@ -98,7 +98,7 @@ def newroom():
 
         room_register.register(user, name)
 
-        obj = room_register.get_room(name, user)
+        obj = room_register.get_room(name, user) # fix this
         new_room = {}
         for item in obj:
             new_room['id'] = item['id']
@@ -111,4 +111,18 @@ def newroom():
 
 @main.route('/saveroom', methods=['POST'])
 def saveroom():
-    pass
+
+    user = session['username']
+    room_id = request.form['room_id']
+
+    if user and room_id:
+
+        room_detail = room_register.get_by_id(room_id)
+        room_name = room_detail['name']
+        admin = room_detail['admin']
+        room_saved.add_room(room_id, room_name, admin, user)
+
+        template = render_template('_micro.html',
+                                   id=room_id,
+                                   name=room_name)
+        return template
