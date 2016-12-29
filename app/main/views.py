@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, flash, session, jsonify, r
 from flask_login import login_user, login_required, logout_user
 
 from . import main
-from .form import LoginForm, RegisterForm, NewRoomForm
+from .form import LoginForm, RegisterForm, NewRoomForm, SaveRoomForm
 
 from ..database import User, Room, Message, RoomUser
 
@@ -72,6 +72,7 @@ def delete_room(r_id):
 def dashboard():
     user = session['username']
     new_room_form = NewRoomForm()
+    save_room_save = SaveRoomForm()
     if new_room_form.validate_on_submit():
         room_register.register(user, new_room_form.room_name.data)
         return redirect(url_for('main.dashboard'))
@@ -80,6 +81,7 @@ def dashboard():
     return render_template('dashboard.html',
                            user=user,
                            new_room_form=new_room_form,
+                           save_room_save=save_room_save,
                            room_list=room_list)
 
 
@@ -103,3 +105,7 @@ def newroom():
 
     return template
 
+
+@main.route('/saveroom', methods=['POST'])
+def saveroom():
+    pass

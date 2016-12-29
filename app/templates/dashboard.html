@@ -32,7 +32,7 @@
 
                             <div class="row">
                                 <div class="input-field col s12 black-text">
-                                    {{new_room_form.submit(class="btn-large red darken-4")}}
+                                    {{new_room_form.submit(class="btn red darken-4")}}
                                 </div>
                             </div>
 
@@ -41,7 +41,26 @@
 
                 </div>
                 <div id="save" class="col s6">
-                    Save room
+
+                    <div class="container">
+                        <form id="saveRoomForm" class="col s12" action={{url_for('main.saveroom')}} method="POST">
+                            {{ save_room_save.csrf_token }}
+
+                            <div class="row">
+                                <div class="input-field col s12 black-text">
+                                    {{save_room_save.room_name}}
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12 black-text">
+                                    {{save_room_save.submit(class="btn blue-grey darken-3")}}
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
 
                 </div>
@@ -99,6 +118,7 @@
                   </tr>
                 </thead>
                  <tbody id="saverRoomTable">
+
                  </tbody>
                 </table>
             </div>
