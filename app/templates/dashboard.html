@@ -13,10 +13,10 @@
                 <div class="col s12">
                   <ul class="tabs">
                     <li class="tab col s6"><a href="#create">Create Room</a></li>
+                    <li class="tab col s6"><a href="#save">Save Room</a></li>
+
                   </ul>
                 </div>
-
-
 
                 <div id="create" class="col s6">
                     <div class="container">
@@ -40,7 +40,9 @@
                     </div>
 
                 </div>
-
+                <div id="save" class="col s6">
+                    Save room
+                </div>
 
                 </div>
           </div>
@@ -74,34 +76,54 @@
                     <td><a href="chat/delete/{{user['id']}}" class="btn red darken-4">Delete Room</a></td>
                   </tr>
                  {% endfor %}
-
                  </tbody>
                 </table>
-
-
             </div>
-
-
           </div>
         </div>
       </div>
 
-        <script type="text/javascript" charset="utf-8">
-            $('#newRoomForm').on('submit', function(e) {
-                e.preventDefault();
-                console.log('prevented')
-                $.ajax({
-                    type:'POST',
-                    url: '/newRoom',
-                    data: {
-                          room_name: $('#room_name').val()
-                    }
-                }).done(function(data){
+      <div class="row">
+        <div class="col s12">
+          <div class="card ">
+            <div class="card-content black-text">
+              <span class="card-title">Saved Rooms</span>
+            </div>
+            <div>
+                <table>
+                <thead>
+                  <tr>
+                      <th data-field="id">Room Name</th>
+                      <th data-field="name"></th>
+                      <th data-field="name"></th>
+                  </tr>
+                </thead>
+                 <tbody id="saverRoomTable">
+                 </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                 $('#roomTable').append(data);
-                });
+
+    <script type="text/javascript" charset="utf-8">
+        $('#newRoomForm').on('submit', function(e) {
+            e.preventDefault();
+            console.log('prevented')
+            $.ajax({
+                type:'POST',
+                url: '/newRoom',
+                data: {
+                      room_name: $('#room_name').val()
+                }
+            }).done(function(data){
+
+             $('#roomTable').append(data);
+             $('#room_name').val('');
             });
+        });
 
-        </script>
+    </script>
 
 {% endblock %}
