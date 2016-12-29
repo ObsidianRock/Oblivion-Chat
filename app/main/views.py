@@ -11,7 +11,7 @@ Userdb = User('Chat', 'User')
 room_users = Room('Chat', 'Room')
 messages = Message('Chat', 'Message')
 room_register = RoomUser('Chat', 'Register')
-room_saved = RoomSaved('Chat', 'Saved') #
+room_saved = RoomSaved('Chat', 'Saved')
 
 
 @main.route('/', methods=['GET', 'POST'])
@@ -78,7 +78,8 @@ def dashboard():
         return redirect(url_for('main.dashboard'))
 
     room_list = room_register.get_user_rooms(user)
-    saved_room_list = room_saved.get_rooms(user) #
+    saved_room_list = room_saved.get_saved_room(user)
+
     return render_template('dashboard.html',
                            user=user,
                            new_room_form=new_room_form,

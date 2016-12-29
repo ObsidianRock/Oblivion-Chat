@@ -175,7 +175,27 @@ class RoomUser(DataBase):
 
 
 class RoomSaved(DataBase):
-    pass
+
+    def __init__(self, db, table):
+        super().__init__(db)
+        self.table = table
+
+    def add_room(self, id_num, name, admin, user):
+        r.db(self.db).table(self.table).insert({'id': id_num,
+                                                'Room_name': name,
+                                                'admin': admin,
+                                                'user': user}).run(self.conn)
+
+    def get_saved_room(self, user):
+        cursor_object = r.db(self.db).table(self.table).filter({'Room_user': user}).run(self.conn)
+        room_list = []
+        for userx in cursor_object:
+            dic_list = {}
+            dic_list['id'] = userx['id']
+            dic_list['name'] = userx['Room_name']
+            dic_list['admin'] = userx['admin']
+            room_list.append(dic_list)
+        return room_list
 
 
 @login_manager.user_loader
