@@ -91,7 +91,7 @@
                     <td>{{user['name'] }}</td>
                     <td><a href="chat/{{user['id']}}" class="btn">Enter Room</a></td>
                     <td><button class="btn blue-grey darken-3" id="copy-button" data-clipboard-text="http://localhost:5000/chat/{{user['id']}}">
-                    Copy Link </button> </td>
+                    Copy to clipboard</button> </td>
                     <td><a href="chat/delete/{{user['id']}}" class="btn red darken-4">Delete Room</a></td>
                   </tr>
                  {% endfor %}
@@ -123,7 +123,7 @@
                     <td>{{user['name'] }}</td>
                     <td><a href="chat/{{user['id']}}" class="btn">Enter Room</a></td>
                     <td><button class="btn blue-grey darken-3" id="copy-button" data-clipboard-text="http://localhost:5000/chat/{{user['id']}}">
-                    Copy Link </button> </td>
+                    Copy to clipboard</button> </td>
                     <td><a href="chat/delete/{{user['id']}}" class="btn red darken-4">Delete Room</a></td>
                   </tr>
                  {% endfor %}
