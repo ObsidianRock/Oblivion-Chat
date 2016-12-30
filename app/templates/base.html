@@ -87,23 +87,7 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
         <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.13/clipboard.min.js"></script>
-        <script>
-        $(".button-collapse").sideNav();
-
-           var clipboard = new Clipboard('#copy-button');
-
-           clipboard.on('success', function(e) {
-            Materialize.toast('Link Copied', 1000)
-            e.clearSelection();
-        });
-
-        clipboard.on('error', function(e) {
-            Materialize.toast('Copy error', 1500)
-        });
-
-        </script>
-
-
+        <script type="text/javascript" src="{{url_for('static', filename='js/base.js')}}"></script>
 
 
       {% endblock %}
