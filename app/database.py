@@ -2,6 +2,8 @@ import sys
 
 import rethinkdb as r
 
+from . import db
+
 from . import login_manager, bcrypt
 from baseconv import BaseConverter
 from flask_login import UserMixin
@@ -204,6 +206,15 @@ class RoomSaved(DataBase):
             dic_list['name'] = userx['Room_name']
             room_list.append(dic_list)
         return room_list
+
+
+class UserModel(UserMixin, db.Model):
+
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True)
+    color = db.Column(db.String(64))
+    password_hash = db.Column(db.PickleType)
 
 
 @login_manager.user_loader
