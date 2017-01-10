@@ -10,7 +10,6 @@ bcrypt = Bcrypt()
 login_manager = LoginManager()
 db = SQLAlchemy()
 
-
 def create_app(debug=True):
 
     app = Flask(__name__)

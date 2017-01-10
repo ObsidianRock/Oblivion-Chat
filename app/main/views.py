@@ -1,10 +1,11 @@
+from app import db
 from flask import render_template, redirect, url_for, flash, session, request
 from flask_login import login_user, login_required, logout_user
 
 from . import main
 from .form import LoginForm, RegisterForm, NewRoomForm, SaveRoomForm
 
-from ..database import User, Room, Message, RoomUser, RoomSaved
+from ..database import User, Room, Message, RoomUser, RoomSaved, UserModel
 
 
 Userdb = User('Chat', 'User')
