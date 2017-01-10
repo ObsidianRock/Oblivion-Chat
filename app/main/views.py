@@ -43,7 +43,10 @@ def logout():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        Userdb.insert_user(form.username.data, form.password.data)
+        user = UserModel(username=form.username.data,
+                         password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
         flash('You are registered', 'green accent-3')
         return redirect(url_for('main.main_page'))
     return render_template('register.html',
