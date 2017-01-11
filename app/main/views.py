@@ -78,9 +78,6 @@ def dashboard():
     user = session['username']
     new_room_form = NewRoomForm()
     save_room_form = SaveRoomForm()
-    if new_room_form.validate_on_submit():
-        room_register.register(user, new_room_form.room_name.data)
-        return redirect(url_for('main.dashboard'))
 
     room_list = room_register.get_user_rooms(user)
     saved_room_list = room_saved.get_saved_room(user)

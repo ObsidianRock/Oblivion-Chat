@@ -232,6 +232,7 @@ class RoomModel(db.Model):
 
     __tablename__ = 'room'
     id = db.Column(db.BigInteger, primary_key=True)
+    name = db.Column(db.String(64))
     admin_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created = db.Column(db.DateTime)
 
