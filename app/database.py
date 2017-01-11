@@ -215,6 +215,9 @@ class UserModel(UserMixin, db.Model):
     def verify_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
 
+    def get_color(self):
+        return self.color
+
 
 @login_manager.user_loader
 def user_loader(user_id):

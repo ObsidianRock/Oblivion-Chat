@@ -24,6 +24,7 @@ def main_page():
         if user and user.verify_password(form.password.data):
             login_user(user)
             session['username'] = form.username.data
+            session['color'] = user.get_color()
             flash('logged in', 'green accent-3')
             return redirect(url_for('main.dashboard'))
     return render_template('main.html',
