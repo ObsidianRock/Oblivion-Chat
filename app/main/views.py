@@ -6,6 +6,7 @@ from . import main
 from .form import LoginForm, RegisterForm, NewRoomForm, SaveRoomForm
 
 from ..database import User, Room, Message, RoomUser, RoomSaved, UserModel
+from ..utils import pick_color
 
 
 Userdb = User('Chat', 'User')
@@ -42,7 +43,8 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         user = UserModel(username=form.username.data,
-                         password=form.password.data)
+                         password=form.password.data,
+                         color=pick_color())
         db.session.add(user)
         db.session.commit()
         flash('You are registered', 'green accent-3')

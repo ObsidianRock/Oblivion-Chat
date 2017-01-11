@@ -7,13 +7,7 @@ from . import db
 from . import login_manager, bcrypt
 from baseconv import BaseConverter
 from flask_login import UserMixin
-from random import randint, SystemRandom
-
-
-colors2 = ["red darken-4", "purple darken-4", "pink darken-4", "deep-purple darken-4", "indigo darken-4",
-           "blue darken-4", "light-blue darken-4", "cyan darken-4", "teal darken-4", "green darken-4",
-           "light-green darken-4", "lime darken-4", "orange darken-4", "deep-orange darken-4", "brown darken-4",
-           "blue-grey darken-4", "grey darken-4", "yellow darken-4"]
+from random import SystemRandom
 
 
 characters = 'abcdefghkmnpqrstwxyz'
@@ -32,12 +26,6 @@ def gen_short_id(long_id):
 
 def get_long_id(short_id):
     return number_converter.decode(short_id)
-
-
-def pick_color():
-    num = randint(0, len(colors2))
-    color = colors2[num]
-    return color
 
 
 class DataBase:
@@ -97,7 +85,7 @@ class User(UserMixin, DataBase):
             try:
                 r.db(self.db).table(self.table).insert({'User': username,
                                                         'Password': pw_hash,
-                                                        'color': pick_color()}).run(self.conn)
+                                                        }).run(self.conn)
             except Exception as e:
                 print(str(e))
                 print('couldnt insert items')
