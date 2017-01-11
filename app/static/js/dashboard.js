@@ -8,9 +8,15 @@
                       room_name: $('#room_name').val()
                 }
             }).done(function(data){
+             console.log(data)
 
-             $('#roomTable').append(data);
-             $('#room_name').val('');
+              if (data.error){
+                Materialize.toast('Something went wrong', 1000);
+              }
+              else {
+               $('#roomTable').append(data.stuff);
+                $('#room_name').val('');
+                }
             });
         });
 

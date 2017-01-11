@@ -1,11 +1,12 @@
 from app import db
-from flask import render_template, redirect, url_for, flash, session, request
+from datetime import datetime
+from flask import render_template, redirect, url_for, flash, session, request, jsonify
 from flask_login import login_user, login_required, logout_user
 
 from . import main
 from .form import LoginForm, RegisterForm, NewRoomForm, SaveRoomForm
 
-from ..database import User, Room, Message, RoomUser, RoomSaved, UserModel
+from ..database import User, Room, Message, RoomUser, RoomSaved, UserModel, RoomModel
 from ..utils import pick_color, id_generator, gen_short_id, get_long_id
 
 
@@ -94,21 +95,29 @@ def dashboard():
 def newroom():
 
     user = session['username']
-    name = request.form['room_name']
+    room_name = request.form['room_name']
 
-    if user and name:
+    if user and room_name:
 
-        room_register.register(user, name)
+        room_admin = UserModel.query.filter_by(username=user).first()
+        room_id = id_generator()
+        new_room = RoomModel(id=room_id,
+                             name=room_name,
+                             admin=room_admin,
+                             created=datetime.utcnow())
+        try:
+            db.session.add(new_room)
+            db.session.commit()
 
-        obj = room_register.get_room(name, user) # fix this
-        new_room = {}
-        for item in obj:
-            new_room['id'] = item['id']
-            new_room['name'] = item['Room_name']
+            template = render_template('_micro.html',
+                                       id=gen_short_id(room_id),
+                                       name=room_name)
 
-        template = render_template('_micro.html', id=new_room['id'], name=new_room['name'])
+            return jsonify({'stuff': template})
 
-        return template
+        except:
+
+            return jsonify({'error': 'Something went wrong'})
 
 
 @main.route('/saveRoom', methods=['POST'])

@@ -1,5 +1,5 @@
 from app import create_app, socketio, db
-from app.database import UserModel
+from app.database import UserModel, RoomModel
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
@@ -10,7 +10,7 @@ migrate = Migrate(app, db)
 
 
 def make_shell_context():
-    return dict(app=app, db=db, User=UserModel)
+    return dict(app=app, db=db, User=UserModel, Room=RoomModel)
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
