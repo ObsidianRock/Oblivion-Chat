@@ -6,7 +6,7 @@ from . import main
 from .form import LoginForm, RegisterForm, NewRoomForm, SaveRoomForm
 
 from ..database import User, Room, Message, RoomUser, RoomSaved, UserModel
-from ..utils import pick_color
+from ..utils import pick_color, id_generator, gen_short_id, get_long_id
 
 
 Userdb = User('Chat', 'User')
