@@ -3,3 +3,4 @@ venv
 __pycache__
 rethinkdb_data
 setup.py
+migrations
