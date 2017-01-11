@@ -198,12 +198,14 @@ class RoomSaved(DataBase):
 
 class UserModel(UserMixin, db.Model):
 
-    __tablename__ = 'roles'
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     color = db.Column(db.String(64))
     password_hash = db.Column(db.PickleType)
     room_count = db.Column(db.Integer)
+
+    admin_rooms = db.relationship('RoomModel', backref='admin')
 
     @property
     def password(self):
@@ -224,6 +226,14 @@ class UserModel(UserMixin, db.Model):
 
     def total_rooms(self):
         return self.room_count
+
+
+class RoomModel(db.Model):
+
+    __tablename__ = 'room'
+    id = db.Column(db.BigInteger, primary_key=True)
+    admin_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    created = db.Column(db.DateTime)
 
 
 @login_manager.user_loader
