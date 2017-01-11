@@ -76,18 +76,29 @@ def delete_room(r_id):
 @main.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    user = session['username']
+    user_name = session['username']
     new_room_form = NewRoomForm()
     save_room_form = SaveRoomForm()
 
-    room_list = room_register.get_user_rooms(user)
-    saved_room_list = room_saved.get_saved_room(user)
+    user = UserModel.query.filter_by(username=user_name).first()
+
+    rooms = RoomModel.query.filter_by(admin_id=user.id).all()
+
+    room_list = []
+
+    for obj in rooms:
+        dict_list = {}
+        dict_list['id'] = gen_short_id(obj.id)
+        dict_list['name'] = obj.name
+        room_list.append(dict_list)
+
+    #saved_room_list = room_saved.get_saved_room(user)
 
     return render_template('dashboard.html',
-                           user=user,
+                           user=user_name,
                            new_room_form=new_room_form,
                            save_room_form=save_room_form,
-                           saved_room_list=saved_room_list,
+
                            room_list=room_list)
 
 
