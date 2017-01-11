@@ -86,7 +86,7 @@ def dashboard():
     room_list = []
     for obj in rooms:
         dict_list = {}
-        dict_list['id'] = gen_short_id(obj.id)
+        dict_list['id'] = obj.short_id
         dict_list['name'] = obj.name
         room_list.append(dict_list)
 
@@ -110,7 +110,7 @@ def newroom():
 
         room_admin = UserModel.query.filter_by(username=user).first()
         room_id = id_generator()
-        new_room = RoomModel(id=room_id,
+        new_room = RoomModel(short_id=gen_short_id(room_id),
                              name=room_name,
                              admin=room_admin,
                              created=datetime.utcnow())

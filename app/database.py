@@ -197,7 +197,7 @@ class RoomSaved(DataBase):
 
 
 association_table = db.Table('RoomAssociation',
-                             db.Column('room_id', db.BigInteger, db.ForeignKey('room.id')),
+                             db.Column('room_id', db.Integer, db.ForeignKey('room.id')),
                              db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
                              )
 
@@ -242,7 +242,8 @@ class UserModel(UserMixin, db.Model):
 class RoomModel(db.Model):
 
     __tablename__ = 'room'
-    id = db.Column(db.BigInteger, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    short_id = db.Column(db.String(64))
     name = db.Column(db.String(64))
     admin_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created = db.Column(db.DateTime)
