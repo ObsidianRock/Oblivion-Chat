@@ -8,7 +8,11 @@ from setup import DATABASE_URL
 socketio = SocketIO()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
+login_manager.session_protection = 'strong'
+login_manager.login_view = 'main.main_page'
+
 db = SQLAlchemy()
+
 
 def create_app(debug=True):
 
