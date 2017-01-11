@@ -203,6 +203,7 @@ class UserModel(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True)
     color = db.Column(db.String(64))
     password_hash = db.Column(db.PickleType)
+    room_count = db.Column(db.Integer)
 
     @property
     def password(self):
@@ -217,6 +218,12 @@ class UserModel(UserMixin, db.Model):
 
     def get_color(self):
         return self.color
+
+    def add_room(self):
+        self.room_count += 1
+
+    def total_rooms(self):
+        return self.room_count
 
 
 @login_manager.user_loader
