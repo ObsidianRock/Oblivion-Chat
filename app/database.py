@@ -229,9 +229,5 @@ class UserModel(UserMixin, db.Model):
 
 
 @login_manager.user_loader
-def user_loader(username):
-    user = User('Chat', 'User')
-    if not user.check_user_exists(username):
-        return
-    user.id = username
-    return user
+def user_loader(user_id):
+    return UserModel.query.get(int(user_id))

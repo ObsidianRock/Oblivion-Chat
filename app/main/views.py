@@ -19,10 +19,8 @@ room_saved = RoomSaved('Chat', 'Saved')
 def main_page():
     form = LoginForm()
     if form.validate_on_submit():
-        if Userdb.check_user_exists(form.username.data) and\
-               Userdb.check_password(form.username.data, form.password.data):
-            user = Userdb
-            user.id = form.username.data
+        user = UserModel.query.filter_by(username=form.username.data).first()
+        if user and user.verify_password(form.password.data):
             login_user(user)
             session['username'] = form.username.data
             flash('logged in', 'green accent-3')
