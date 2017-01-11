@@ -15,7 +15,7 @@ number_converter = BaseConverter(base)
 
 
 def pick_color():
-    num = randint(0, len(colors2))
+    num = randint(0, len(colors2)-1)
     return colors2[num]
 
 

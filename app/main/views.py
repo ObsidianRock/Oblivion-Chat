@@ -81,11 +81,9 @@ def dashboard():
     save_room_form = SaveRoomForm()
 
     user = UserModel.query.filter_by(username=user_name).first()
-
     rooms = RoomModel.query.filter_by(admin_id=user.id).all()
 
     room_list = []
-
     for obj in rooms:
         dict_list = {}
         dict_list['id'] = gen_short_id(obj.id)

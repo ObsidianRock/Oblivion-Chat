@@ -196,6 +196,12 @@ class RoomSaved(DataBase):
         return room_list
 
 
+association_table = db.Table('RoomAssociation',
+                             db.Column('room_id', db.BigInteger, db.ForeignKey('room.id')),
+                             db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+                             )
+
+
 class UserModel(UserMixin, db.Model):
 
     __tablename__ = 'user'
@@ -206,6 +212,11 @@ class UserModel(UserMixin, db.Model):
     room_count = db.Column(db.Integer)
 
     admin_rooms = db.relationship('RoomModel', backref='admin')
+
+    rooms = db.relationship('RoomModel',
+                            secondary=association_table,
+                            backref=db.backref('users', lazy='dynamic'),
+                            lazy='dynamic')
 
     @property
     def password(self):
