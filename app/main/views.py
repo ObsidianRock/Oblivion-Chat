@@ -136,16 +136,24 @@ def newroom():
 def saveroom():
 
     user = session['username']
-    room_id = request.form['room_id']
+    room_short_id = request.form['room_id']
 
-    if user and room_id:
+    if user and room_short_id:
 
-        room_detail = room_register.get_by_id(room_id)
-        room_name = room_detail['name']
-        admin = room_detail['admin']
-        room_saved.add_room(room_id, room_name, admin, user)
+        room_user = UserModel.query.filter_by(username=user).first()
+        room = RoomModel.query.filter_by(short_id=room_short_id).first()
 
-        template = render_template('_micro.html',
-                                   id=room_id,
-                                   name=room_name)
-        return template
+        try:
+            room_user.append(room)
+            db.session.add(room_user)
+            db.session.commit()
+
+            template = render_template('_micro.html',
+                                       id=room.short_id,
+                                       name=room.name)
+
+            return jsonify({'response': template})
+
+        except:
+            db.session.rollback()
+            return jsonify({'error': 'Something went wrong'})
