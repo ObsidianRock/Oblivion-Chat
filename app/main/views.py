@@ -85,9 +85,7 @@ def dashboard():
 
     room_list = []
     for obj in rooms:
-        dict_list = {}
-        dict_list['id'] = obj.short_id
-        dict_list['name'] = obj.name
+        dict_list = {'id': obj.short_id, 'name': obj.name}
         room_list.append(dict_list)
 
     saved_room_list = []
