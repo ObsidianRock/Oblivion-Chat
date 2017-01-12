@@ -8,13 +8,12 @@
                       room_name: $('#room_name').val()
                 }
             }).done(function(data){
-             console.log(data)
 
               if (data.error){
                 Materialize.toast('Something went wrong', 1000);
               }
               else {
-               $('#roomTable').append(data.stuff);
+                $('#roomTable').append(data.stuff);
                 $('#room_name').val('');
                 }
             });
@@ -31,7 +30,12 @@
                 }
             }).done(function(data){
 
-             $('#saverRoomTable').append(data);
-             $('#room_id').val('');
+              if (data.error){
+                Materialize.toast('Something went wrong', 1000);
+              }
+              else {
+                 $('#saverRoomTable').append(data.response);
+                 $('#room_id').val('');
+                }
             });
         });

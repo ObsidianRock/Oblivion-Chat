@@ -144,7 +144,7 @@ def saveroom():
         room = RoomModel.query.filter_by(short_id=room_short_id).first()
 
         try:
-            room_user.append(room)
+            room_user.rooms.append(room)
             db.session.add(room_user)
             db.session.commit()
 
