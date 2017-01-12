@@ -13,7 +13,7 @@
                 Materialize.toast('Something went wrong', 1000);
               }
               else {
-                $('#roomTable').append(data.stuff);
+                $('#roomTable').append(data.response);
                 $('#room_name').val('');
                 }
             });

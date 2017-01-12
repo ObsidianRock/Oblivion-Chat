@@ -69,7 +69,12 @@ def chat(r_id):
 @main.route('/chat/delete/<r_id>')
 @login_required
 def delete_room(r_id):
-    room_register.delete_room(r_id)
+    try:
+        room = RoomModel.query.filter_by(short_id=r_id).first()
+        db.session.delete(room)
+        db.session.commit()
+    except:
+        flash('Something went wrong', 'red')
     return redirect(url_for('main.dashboard'))
 
 
@@ -125,7 +130,7 @@ def newroom():
                                        id=gen_short_id(room_id),
                                        name=room_name)
 
-            return jsonify({'stuff': template})
+            return jsonify({'response': template})
 
         except:
 
