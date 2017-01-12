@@ -90,13 +90,18 @@ def dashboard():
         dict_list['name'] = obj.name
         room_list.append(dict_list)
 
-    #saved_room_list = room_saved.get_saved_room(user)
+    saved_room_list = []
+    user_saved_list = user.rooms.all()
+
+    for room in user_saved_list:
+        temp_dict = {'id': room.id, 'name': room.name}
+        saved_room_list.append(temp_dict)
 
     return render_template('dashboard.html',
                            user=user_name,
                            new_room_form=new_room_form,
                            save_room_form=save_room_form,
-
+                           saved_room_list=saved_room_list,
                            room_list=room_list)
 
 
