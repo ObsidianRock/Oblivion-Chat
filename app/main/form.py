@@ -25,4 +25,4 @@ class NewRoomForm(FlaskForm):
 class SaveRoomForm(FlaskForm):
 
     room_id = StringField('Room id', validators=[DataRequired()], render_kw={"placeholder": "Room id"})
-    submit = SubmitField('Save Room')
+    submit = SubmitField('Save')

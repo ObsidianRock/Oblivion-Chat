@@ -74,6 +74,7 @@ def delete_room(r_id):
         db.session.delete(room)
         db.session.commit()
     except:
+        db.session.rollback()
         flash('Something went wrong', 'red')
     return redirect(url_for('main.dashboard'))
 
@@ -97,7 +98,7 @@ def dashboard():
     user_saved_list = user.rooms.all()
 
     for room in user_saved_list:
-        temp_dict = {'id': room.id, 'name': room.name}
+        temp_dict = {'id': room.short_id, 'name': room.name}
         saved_room_list.append(temp_dict)
 
     return render_template('dashboard.html',
