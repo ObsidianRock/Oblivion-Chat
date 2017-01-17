@@ -22,7 +22,9 @@ class RegisterForm(FlaskForm):
                                render_kw={"class": "validate", 'required': "", "aria-required": "true"})
     submit = SubmitField('Submit')
 
-
+    def validate_username(self, field):
+        if UserModel.query.filter_by(username=field.data).first():
+            raise ValidationError('Username already in use.')
 
 
 class NewRoomForm(FlaskForm):
