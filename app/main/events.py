@@ -54,7 +54,7 @@ def handle_connect(msg):
     users, user_count = connection.user_list(room)
 
     if session['username'] in users:
-        print('yes in users ')
+
         user_color = []
         for user in users:
             string ='<tr><td class="{} white-text">{}</td></tr>'
@@ -75,8 +75,6 @@ def handle_connect(msg):
                            }
 
     else:
-        print('not in users ')
-
         connection.add_user(session['username'], room, session['color'])
         users, user_count = connection.user_list(room)
 
@@ -118,7 +116,7 @@ def handle_leave_room(obj):
     user_color = []
     for user in users:
         string = '<tr><td class="{} white-text">{}</td></tr>'
-        color = Userdb.get_color(user)
+        color = connection.user_color(user, room)
         full = string.format(color, user)
         user_color.append(full)
 
