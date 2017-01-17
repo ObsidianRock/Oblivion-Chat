@@ -10,7 +10,6 @@ from ..database import User, Room, Message, RoomUser, RoomSaved, UserModel, Room
 from ..utils import pick_color, id_generator, gen_short_id, get_long_id
 
 
-Userdb = User('Chat', 'User')
 room_users = Room('Chat', 'Room')
 messages = Message('Chat', 'Message')
 room_register = RoomUser('Chat', 'Register')
@@ -25,7 +24,7 @@ def main_page():
         if user and user.verify_password(form.password.data):
             login_user(user)
             session['username'] = form.username.data
-            session['color'] = user.get_color()
+
             flash('logged in', 'green accent-3')
             return redirect(url_for('main.dashboard'))
     return render_template('main.html',
@@ -61,6 +60,8 @@ def chat(r_id):
     room_id = r_id
     session['room'] = room_id
     user = session['username']
+    user_query = UserModel.query.filter_by(username=user).first()
+    session['color'] = user_query.get_color()
     return render_template('chat.html',
                            user=user,
                            room_id=room_id)

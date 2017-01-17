@@ -112,20 +112,29 @@ class Room(DataBase):
         super().__init__(db)
         self.table = table
 
-    def add_user(self, user, room):
-
+    def add_user(self, user, room, color):
         r.db(self.db).table(self.table).insert({'room': room,
-                                                'Room_user': user}).run(self.conn)
+                                                'room_user': user,
+                                                'color': color}).run(self.conn)
 
     def user_leave(self, user, room):
         r.db(self.db).table(self.table).filter({'room': room,
-                                                'Room_user': user}).delete().run(self.conn)
+                                                'room_user': user}).delete().run(self.conn)
+
+    def user_color(self, user, room):
+        user = r.db(self.db).table(self.table).filter({'room': room,
+                                                       'room_user': user}).run(self.conn)
+        color = []
+        for item in user:
+            color.append(item['color'])
+
+        return color[0]
 
     def user_list(self, room):
         users = r.db(self.db).table(self.table).filter({'room': room}).run(self.conn)
         user_list = []
         for user in users:
-            user_list.append(user['Room_user'])
+            user_list.append(user['room_user'])
         user_count = len(user_list)
         return user_list, user_count
 

@@ -10,10 +10,10 @@ message = Message('Chat', 'Message')
 Userdb = User('Chat', 'User')
 
 
-def make_response(msg): # will make this more pretty later, now just a trial
+def make_response(msg, room): # will make this more pretty later, now just a trial
 
     time_now = datetime.now().time()
-    color = Userdb.get_color(msg['user'])
+    color = connection.user_color(msg['user'], room)
     color_split = color.split(' ')
     new_color = 'class="title {}-text text-{} message_title"'.format(color_split[0], color_split[1])
     string_time = time_now.strftime('%H:%M:%S')
@@ -24,11 +24,11 @@ def make_response(msg): # will make this more pretty later, now just a trial
     return full
 
 
-def database_response(msg_list):  # will make this more pretty later, now just a trial
+def database_response(msg_list, room):  # will make this more pretty later, now just a trial
 
     full_list = []
     for msg in msg_list:
-        color = Userdb.get_color(msg['user'])
+        color = connection.user_color(msg['user'], room)
         color_split = color.split(' ')
         new_color = 'class="title {}-text text-{} message_title"'.format(color_split[0], color_split[1])
         string = '<li class="collection-item"><span {}>{}</span><p>{}</p><p>{}</p></li>'
@@ -42,7 +42,7 @@ def handle_message(msg):
 
     room = session.get('room')
     message.commit(msg['message'], msg['user'], room)
-    full = make_response(msg)
+    full = make_response(msg, room)
 
     emit('chat_response', {'string': full}, room=room)
 
@@ -54,16 +54,17 @@ def handle_connect(msg):
     users, user_count = connection.user_list(room)
 
     if session['username'] in users:
+        print('yes in users ')
         user_color = []
         for user in users:
             string ='<tr><td class="{} white-text">{}</td></tr>'
-            color = Userdb.get_color(user)
+            color = connection.user_color(user, room)
             full = string.format(color, user)
             user_color.append(full)
 
         msg = 'not'
         message_from_db = message.get_last(room)
-        message_list = database_response(message_from_db)
+        message_list = database_response(message_from_db, room)
         message_reversed = message_list[::-1]
 
         refreshed = {'message_list': message_reversed}
@@ -74,13 +75,15 @@ def handle_connect(msg):
                            }
 
     else:
-        connection.add_user(session['username'], room)
+        print('not in users ')
+
+        connection.add_user(session['username'], room, session['color'])
         users, user_count = connection.user_list(room)
 
         user_color = []
         for user in users:
             string = '<tr><td class="{} white-text">{}</td></tr>'
-            color = Userdb.get_color(user)
+            color = connection.user_color(user, room)
             full = string.format(color, user)
             user_color.append(full)
 
