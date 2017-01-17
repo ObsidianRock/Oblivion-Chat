@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired, EqualTo
+from wtforms.validators import DataRequired, EqualTo, ValidationError
 
+from ..database import UserModel
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -10,10 +11,18 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password_2')])
-    password_2 = PasswordField('Confirm Password', validators=[DataRequired()])
+    username = StringField('Username',
+                           validators=[DataRequired()],
+                           render_kw={"class": "validate", 'required': "", "aria-required": "true"})
+    password = PasswordField('Password',
+                             validators=[DataRequired(), EqualTo('password_2')],
+                             render_kw={"class": "validate", 'required': "", "aria-required": "true"})
+    password_2 = PasswordField('Confirm Password',
+                               validators=[DataRequired()],
+                               render_kw={"class": "validate", 'required': "", "aria-required": "true"})
     submit = SubmitField('Submit')
+
+
 
 
 class NewRoomForm(FlaskForm):
