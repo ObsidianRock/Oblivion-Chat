@@ -19,7 +19,15 @@
                                 <div class="input-field col s12 black-text">
                                     {{form.username}}{{form.username.label(class="black-text")}}
                                 </div>
+                                {% if form.username.errors %}
+                                <div>
+                                {% for error in form.username.errors %}
+                                   <span class="chip red accent-2">{{ error }}<i class="close material-icons">close</i>
+                                   </span>
 
+                                {% endfor %}
+                                </div>
+                                {% endif %}
                             </div>
 
                             <div class="row">
