@@ -106,10 +106,7 @@ def handle_leave_room(obj):
     room = session.get('room')
     connection.user_leave(user, room)
 
-    try:
-        del session['username']
-    except Exception as e:
-        print(str(e))
+    
 
     users, user_count = connection.user_list(room)
 

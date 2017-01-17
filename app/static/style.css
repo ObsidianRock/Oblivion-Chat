@@ -5,3 +5,7 @@
 	font-size: 600px;
 }
 
+
+#user_title_name p{
+    font-weight: bold;
+}
