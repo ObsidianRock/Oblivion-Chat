@@ -29,12 +29,10 @@
                 <li><a id='dashboard' class="white-text red darken-4" href="{{url_for('main.dashboard')}}">Dashboard</a></li>
               {% endif %}
 
-              {% if not current_user.is_authenticated %}
-                <li><a class="white-text red darken-4" href="{{url_for('main.register')}}">Register</a></li>
-              {% endif %}
-
               {% if current_user.is_authenticated %}
-                <li><a id="logout" class="white-text red darken-4" href="{{url_for('main.logout')}}">Logout</a></li>
+               <li><a id="logout" class="white-text red darken-4" href="{{url_for('main.logout')}}">Logout</a></li>
+               {% else %}
+               <li><a class="white-text red darken-4" href="{{url_for('main.register')}}">Register</a></li>
               {% endif %}
 
               <li><a href="#"></a></li>
