@@ -43,13 +43,18 @@ def logout():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        user = UserModel(username=form.username.data,
-                         password=form.password.data,
-                         color=pick_color())
-        db.session.add(user)
-        db.session.commit()
-        flash('You are registered', 'green accent-3')
-        return redirect(url_for('main.main_page'))
+        try:
+            user = UserModel(username=form.username.data,
+                             password=form.password.data,
+                             color=pick_color())
+            db.session.add(user)
+            db.session.commit()
+            flash('You are registered', 'green accent-3')
+            return redirect(url_for('main.main_page'))
+        except Exception as e:
+            print(str(e))
+            flash('Not registered, Something went wrong', 'red')
+            return redirect(url_for('main.main_page'))
     return render_template('register.html',
                            form=form)
 
@@ -74,7 +79,8 @@ def delete_room(r_id):
         room = RoomModel.query.filter_by(short_id=r_id).first()
         db.session.delete(room)
         db.session.commit()
-    except:
+    except Exception as e:
+        print(str(e))
         db.session.rollback()
         flash('Something went wrong', 'red')
     return redirect(url_for('main.dashboard'))
