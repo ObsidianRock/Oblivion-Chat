@@ -154,7 +154,13 @@ def saveroom():
     if user and room_short_id:
 
         room_user = UserModel.query.filter_by(username=user).first()
-        room = RoomModel.query.filter_by(short_id=room_short_id).first()
+        if 'http' in room_short_id:
+            link_split = room_short_id.split('/')
+            r_short_id = link_split[-1]
+            room = RoomModel.query.filter_by(short_id=r_short_id).first()
+        else:
+
+            room = RoomModel.query.filter_by(short_id=room_short_id).first()
 
         try:
             room_user.rooms.append(room)

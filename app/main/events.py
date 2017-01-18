@@ -106,7 +106,7 @@ def handle_leave_room(obj):
     room = session.get('room')
     connection.user_leave(user, room)
 
-    
+
 
     users, user_count = connection.user_list(room)
 
