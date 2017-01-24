@@ -1,10 +1,10 @@
 # Oblivion
 
-Bi-directional Chat application
-User Registration and login
-Multiple rooms
-Unique urls for each room
-share and save room
+* Bi-directional Chat application
+* User Registration and login
+* Multiple rooms
+* Unique urls for each room
+* share and save room
 
 
 ## Packages Used
