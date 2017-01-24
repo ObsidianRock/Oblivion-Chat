@@ -26,20 +26,24 @@ pip install virtualenv
 virtualenv venv
 source venv/bin/activate (for windows venv\Scripts\activate)
 pip install -r requirements.txt
-[install server](https://www.rethinkdb.com/docs/quickstart/)
 ```
+[install server](https://www.rethinkdb.com/docs/quickstart/)
+
 
 ### Create Databases
-```
+
 [Start rethinkdb server](https://www.rethinkdb.com/docs/quickstart/)
+```
 python main.py rethinkDbSetup  (create Thinkdb database and tables)
 python main.py shell
 db.create_all()                (to create Postgresql database and tables)
 ```
 
 ### Running Application
-```
+
 Start rethinkdb server
+
+```
 python main.py run
 
 ```
