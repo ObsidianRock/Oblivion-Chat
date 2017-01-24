@@ -6,14 +6,9 @@ from flask_login import login_user, login_required, logout_user
 from . import main
 from .form import LoginForm, RegisterForm, NewRoomForm, SaveRoomForm
 
-from ..database import User, Room, Message, RoomUser, RoomSaved, UserModel, RoomModel
+from ..database import UserModel, RoomModel
 from ..utils import pick_color, id_generator, gen_short_id, get_long_id
 
-
-room_users = Room('Chat', 'Room')
-messages = Message('Chat', 'Message')
-room_register = RoomUser('Chat', 'Register')
-room_saved = RoomSaved('Chat', 'Saved')
 
 
 @main.route('/', methods=['GET', 'POST'])

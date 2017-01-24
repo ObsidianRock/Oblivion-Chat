@@ -1,13 +1,12 @@
-from ..database import Message, Room, User
+from ..database import Message, Room
 from app import socketio
-from datetime import datetime, time
+from datetime import datetime
 
 from flask import session
 from flask_socketio import emit, join_room, leave_room
 
 connection = Room('Chat', 'Room')
 message = Message('Chat', 'Message')
-Userdb = User('Chat', 'User')
 
 
 def make_response(msg, room): # will make this more pretty later, now just a trial
