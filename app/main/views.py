@@ -10,7 +10,6 @@ from ..database import UserModel, RoomModel
 from ..utils import pick_color, id_generator, gen_short_id, get_long_id
 
 
-
 @main.route('/', methods=['GET', 'POST'])
 def main_page():
     form = LoginForm()
@@ -62,9 +61,12 @@ def chat(r_id):
     user = session['username']
     user_query = UserModel.query.filter_by(username=user).first()
     session['color'] = user_query.get_color()
+    room_obj = RoomModel.query.filter_by(short_id=room_id).first()
+    room_name = room_obj.name
     return render_template('chat.html',
                            user=user,
-                           room_id=room_id)
+                           room_id=room_id,
+                           room_name=room_name)
 
 
 @main.route('/chat/delete/<r_id>')
