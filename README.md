@@ -61,3 +61,9 @@ python main.py run
 
 ## Chat application
 ![alt text](https://github.com/ObsidianRock/Oblivion-Chat/blob/master/video/chat_22.gif "Chat Application")
+
+
+
+# Todo
+
+* user __Bleach__ to sanitize  user input
