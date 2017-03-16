@@ -14,7 +14,7 @@
 * SocketIO & Flask-SocketIO
 * WTForms
 * SQLAlchemy
-* Postgesql Database
+* Postgresql Database
 * Rethinkdb Database
 
 
@@ -52,15 +52,15 @@ python main.py run
 # Demo
 
 ### Register User and Login
-![alt text]( https://github.com/ObsidianRock/Oblivion-Chat/blob/master/video/register_1.gif "Register and Login")
+![link for gif]( https://github.com/ObsidianRock/Oblivion-Chat/blob/master/video/register_1.gif "Register and Login")
 
 
 ## Adding new room and saving room
-![alt text](https://github.com/ObsidianRock/Oblivion-Chat/blob/master/video/add%20and%20save%20room.gif "New and Save room")
+![link for gif](https://github.com/ObsidianRock/Oblivion-Chat/blob/master/video/add%20and%20save%20room.gif "New and Save room")
 
 
 ## Chat application
-![alt text](https://github.com/ObsidianRock/Oblivion-Chat/blob/master/video/chat_22.gif "Chat Application")
+![link for gif](https://github.com/ObsidianRock/Oblivion-Chat/blob/master/video/chat_22.gif "Chat Application")
 
 
 
