@@ -48,6 +48,9 @@ python main.py run
 
 ```
 
+# Stil Todo
+
+* user __Bleach__ to sanitize  user input to make it more secure. 
 
 # Demo
 
@@ -61,9 +64,3 @@ python main.py run
 
 ## Chat application
 ![link for gif](https://github.com/ObsidianRock/Oblivion-Chat/blob/master/video/chat_22.gif "Chat Application")
-
-
-
-# Todo
-
-* user __Bleach__ to sanitize  user input
