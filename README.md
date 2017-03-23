@@ -49,8 +49,11 @@ python main.py run
 ```
 
 # Stil Todo
+* The application is half way finished, taking a break to learn more technologies:
 
+* Delete messages after 24 hours - create a Celery task for this. 
 * user __Bleach__ to sanitize  user input to make it more secure. 
+* Fix up the hardcoded template responses which are inefficient and hard to maintain. 
 
 # Demo
 
